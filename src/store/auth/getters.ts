@@ -1,7 +1,5 @@
 export default ({
-    getters: {
-        hello() {
-            return 'hello'
-        }
+    hello() {
+        return 'hello'
     }
 })
