@@ -1,0 +1,20 @@
+.hero_carousel {
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $white;
+    font-size: 25px;
+    &:hover {
+      color: $primary;
+    }
+  }
+  .next {
+    right: 10px;
+  }
+  .prev {
+    left: 10px;
+  }
+  overflow: hidden;
+}
