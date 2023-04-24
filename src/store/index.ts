@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
-import getters from './auth/getters'
+
+// Importing External Modules 
+import auth from './auth'
+import product from './product'
 
 export default createStore({
   state: {
@@ -11,6 +14,7 @@ export default createStore({
   actions: {
   },
   modules: {
-    getters
+    auth,
+    product
   }
 })
