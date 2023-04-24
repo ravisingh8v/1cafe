@@ -1,0 +1,13 @@
+.hero-section {
+  background-image: url("~@/assets/images/heroSection/heroDesktopMode.jpg");
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  // border: 2px solid red;
+  height: 700px;
+  h1,
+  h2,
+  h3 {
+    font-family: $font-family-cursive;
+  }
+}

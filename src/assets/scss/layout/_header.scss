@@ -1,1 +1,30 @@
-
+// nav style
+.nav-link {
+  color: $white;
+  &.active {
+    color: $primary;
+    &:focus {
+      color: $primary;
+    }
+  }
+}
+// profile
+.user_profile_wrapper {
+  width: 30px;
+  height: 30px;
+  overflow: hidden;
+  border-radius: 50%;
+  span .material-symbols-outlined {
+    font-size: 30px;
+  }
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+.profile_action_wrapper {
+  bottom: -90px;
+  li:not(:last-child) {
+    border-bottom: 1px solid $gray;
+  }
+}

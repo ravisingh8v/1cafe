@@ -4,6 +4,13 @@ body {
   height: 100%;
   width: 100%;
 }
+
 #app {
   height: inherit;
+}
+.cp {
+  cursor: pointer;
+}
+.theme-p {
+  padding: 20px;
 }

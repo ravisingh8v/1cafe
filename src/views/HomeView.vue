@@ -1,6 +1,21 @@
 <template>
   <div class="home">
-    <h1>this is home page</h1>
+    <!-- hero wrapper  -->
+    <section class="hero-section theme-p">
+      <!-- hero content  -->
+      <div>
+        <span>Cafe & Restaurant Est.2035</span>
+        <div>
+          <h2>
+            <span>Your Go-to Spot for</span>
+            <span>Delicious Eats & Coffee</span>
+          </h2>
+        </div>
+        <div>
+          <button>Order Now</button>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -9,3 +24,4 @@ import { defineComponent } from "vue";
 
 export default defineComponent({});
 </script>
+<style lang="scss"></style>
