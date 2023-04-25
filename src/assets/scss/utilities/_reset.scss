@@ -12,10 +12,17 @@ ul {
 a {
   cursor: pointer;
   text-decoration: none;
+  color: $white;
 }
 
 // btn resets
-.btn-danger {
+.btn-outline-secondary {
   padding: 0.75rem 1.275rem;
-  background-color: $danger;
+}
+
+h1,
+h2,
+h3 {
+  font-family: $font-family-cursive;
+  font-size: $font-size-headings;
 }

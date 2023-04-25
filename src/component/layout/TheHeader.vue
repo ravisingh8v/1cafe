@@ -54,8 +54,13 @@
           </ul>
         </div>
 
-        <div class="ms-2" v-if="true">
+        <div class="ms-2" v-if="isLogin !== '/login'">
           <RouterLink class="btn btn-primary" to="/login">Log in</RouterLink>
+        </div>
+        <div class="ms-2" v-else>
+          <RouterLink class="btn btn-primary" to="/registration">
+            Registration
+          </RouterLink>
         </div>
       </div>
     </div>
@@ -66,6 +71,7 @@
 <script lang="ts">
 import { ref } from "vue";
 export default {
+  props: ["isLogin"],
   setup() {
     const openMenu = ref(false);
 
