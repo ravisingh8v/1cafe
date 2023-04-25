@@ -8,7 +8,7 @@
       <div class="col-3 p-5">
         <div>
           <h3 class="mb-3 fs-1">Newsletter</h3>
-          <p class="mb-3">Stay up to date with all the latest from 47th Cafe</p>
+          <p class="mb-3">Stay up to date with all the latest from 1Cafe</p>
 
           <span class="fw-lighter ps-1">Email*</span>
           <div class="d-flex">
