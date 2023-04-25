@@ -10,7 +10,7 @@
         </transition>
       </router-view>
     </section>
-    <the-footer v-if="!isLogin"></the-footer>
+    <the-footer v-if="!isLogin && footer"></the-footer>
   </section>
 </template>
 <script lang="ts">
@@ -23,6 +23,7 @@ export default {
   components: { TheHeader, TheFooter },
   setup() {
     const route = useRoute();
+    // getting current route to hide footer on login page
     const currentRoute = ref("");
     watch(
       () => route.path,
@@ -40,11 +41,25 @@ export default {
       return false;
     });
 
-    return { isLogin };
+    // to showing footer when route is ready
+    const footer = ref();
+    watch(isLogin, () => {
+      isLogin.value == false
+        ? setTimeout(() => {
+            footer.value = true;
+          }, 1000)
+        : (footer.value = false);
+    });
+
+    return {
+      isLogin,
+      footer,
+    };
   },
 };
 </script>
 <style lang="scss">
+// route animation
 .route-enter-from {
   opacity: 0;
 }
