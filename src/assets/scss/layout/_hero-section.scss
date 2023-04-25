@@ -1,14 +1,22 @@
 .hero-section {
+  position: relative;
   background-image: url("~@/assets/images/heroSection/heroDesktopMode.jpg");
-  background-position: center;
-  background-size: 100%;
-  background-repeat: no-repeat;
+  @extend %bg-image-properties;
+  background-attachment: fixed;
   // border: 2px solid red;
   height: 700px;
-  h1,
-  h2,
-  h3 {
-    font-family: $font-family-cursive;
-    font-size: $font-size-headings;
+
+  .hero_overlay {
+    position: absolute;
+    background-color: black;
+    opacity: 0.6;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+  .hero_content {
+    z-index: 10;
   }
 }
