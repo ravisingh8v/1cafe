@@ -6,6 +6,7 @@ import product from './product'
 
 export default createStore({
   state: {
+
   },
   getters: {
   },
@@ -14,7 +15,7 @@ export default createStore({
   actions: {
   },
   modules: {
-    auth,
+    auth: auth,
     product
   }
 })

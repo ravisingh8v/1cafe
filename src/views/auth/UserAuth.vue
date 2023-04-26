@@ -1,5 +1,13 @@
 <template>
   <div class="row gx-0 h-100">
+    <!-- Dialog Box For Error  -->
+    <base-dialog
+      :title="'Something went wrong'"
+      @close="handleError"
+      :show="!!catchError"
+    >
+      <p>{{ catchError }}</p>
+    </base-dialog>
     <!-- left section  -->
     <div class="col-5">
       <!-- for background image  -->
@@ -16,12 +24,16 @@
           {{ isRouteLogin ? "Login" : "Register" }}
         </h1>
         <!-- import slot -->
-        <BaseCard>
-          <form @submit.prevent="">
+        <base-card>
+          <Form
+            @submit="submitForm"
+            v-slot="{ errors }"
+            :validation-schema="schema"
+          >
             <!-- this div is visible only when route is registration -->
             <div v-if="!isRouteLogin" class="mb-3">
               <!-- profile upload   -->
-              <div class="mb-3 profile d-flex align-items-center">
+              <!-- <div class="mb-3 profile d-flex align-items-center">
                 <label
                   for="profile"
                   class="profile_wrapper overflow-hidden rounded-circle position-relative"
@@ -42,28 +54,44 @@
                 >
                   upload file
                 </label>
-                <input type="file" class="d-none" name="" id="profile" />
-              </div>
+                <span>{{ errors.profileImage }}</span>
+                <Field
+                  type="file"
+                  class="d-none"
+                  name="profileImage"
+                  id="profile"
+                  @change="uploadFile"
+                  ref="file"
+                />
+              </div> -->
               <div class="row gx-0 g-2">
                 <div class="col-6">
                   <label for="firstname">Firstname</label>
-                  <input
+                  <Field
                     type="text"
                     class="form-control"
-                    name="firstname"
+                    name="firstName"
                     id="firstname"
                     placeholder="Firstname"
+                    :class="{ 'is-invalid': errors.firstName }"
                   />
+                  <span class="invalid-text text-danger">{{
+                    errors.firstName
+                  }}</span>
                 </div>
                 <div class="col-6">
                   <label for="lastname">lastName</label>
-                  <input
+                  <Field
                     type="text"
                     class="form-control"
-                    name="lastname"
+                    name="lastName"
                     id="lastname"
                     placeholder="Lastname"
+                    :class="{ 'is-invalid': errors.lastName }"
                   />
+                  <span class="invalid-text text-danger">{{
+                    errors.lastName
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -71,29 +99,41 @@
             <!-- for login and registration similar fields  -->
             <div class="mb-3">
               <label for="email">Email </label>
-              <input
+              <Field
                 id="email"
                 type="email"
+                name="email"
                 class="form-control"
                 placeholder="ravi.singh@test.com"
+                :class="{ 'is-invalid': errors.email }"
               />
+              <span class="invalid-text text-danger">{{ errors.email }}</span>
             </div>
             <div class="mb-4 mt-3">
               <label for="password">Password </label>
-              <input
+              <Field
                 id="password"
                 type="password"
                 class="form-control"
+                name="password"
                 placeholder="Enter Password"
+                :class="{ 'is-invalid': errors.password }"
               />
+              <span class="invalid-text text-danger">{{
+                errors.password
+              }}</span>
             </div>
             <div class="d-flex flex-column">
               <!-- submit button  -->
               <div>
                 <button class="btn btn-primary">
                   {{ isRouteLogin ? "Login" : "Submit" }}
+                  <span v-if="isLoading"> ....</span>
                 </button>
               </div>
+              <!-- <div class="my-2">
+                <span>{{ catchError }}</span>
+              </div> -->
               <!-- action -->
               <span class="mx-2 mt-2">
                 <span v-if="isRouteLogin">
@@ -113,24 +153,55 @@
                 >
               </span>
             </div>
-          </form>
-        </BaseCard>
+          </Form>
+        </base-card>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import BaseCard from "@/ui/BaseCard.vue";
+// component
+
+// Setup
 import { computed, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+// routing
+import { useRoute, useRouter } from "vue-router";
+// for validation
+import * as yup from "yup";
+import { Field, FormContext, Form } from "vee-validate";
+// store
+import { useStore } from "vuex";
+
 export default {
-  components: { BaseCard },
+  components: { Field, Form },
+
   setup() {
-    const isRouteLogin = ref();
+    const router = useRouter();
     const route = useRoute();
+    const isLoading = ref("" as any);
+    const store = useStore();
+    const isRouteLogin = ref();
     const currentRoute = computed(() => {
       return route.path;
     });
+
+    // loading
+    const isLoadings = computed(() => {
+      return store.getters["auth/isLoading"];
+    });
+    watch(isLoadings, () => {
+      isLoading.value = isLoadings.value;
+    });
+    // watch(isLoading, () => {
+    //   isLoading.value = store.getters["auth/isLoading"];
+    // });
+
+    // watch(
+    //   () => store.getters("auth/isLoading"),
+    //   () => {
+    //     isLoading.value = store.getters("auth/isLoading");
+    //   }
+    // );
 
     // watch on change route to manipulate data according to registration and login
     watch(
@@ -145,8 +216,66 @@ export default {
       { immediate: true }
     );
 
+    // forms Data
+    const catchError = ref();
+    const schema = yup.object({
+      profileImage: yup.string(),
+      firstName: yup.string().required("this field is required"),
+      lastName: yup.string().required("this field is required"),
+      email: yup.string().email().required("this field is required"),
+      password: yup.string().required("this field is required").min(6),
+    });
+
+    // form method
+    // const file = ref("");
+    // function uploadFile(event: any) {
+    //   const image = event.target.files[0];
+    //   console.log(image);
+    //   console.log(file);
+    // }
+    async function submitForm(value: FormContext["values"]) {
+      // click on login
+      if (isRouteLogin.value) {
+        console.log("this is login page bro");
+      } else {
+        // on registration
+
+        try {
+          await store.dispatch("auth/signUpWithEmailPassword", {
+            email: value.email,
+            password: value.password,
+          });
+        } catch (error) {
+          catchError.value = error;
+          return false;
+        }
+        // if email not exists do this
+        await store.dispatch("auth/registration", {
+          // profileImage: value.profileImage,
+          firstName: value.firstName,
+          lastName: value.lastName,
+          // email: value.email,
+          password: value.password,
+        });
+        router.push("/login");
+      }
+    }
+
+    // dialog
+    function handleError() {
+      catchError.value = "";
+    }
     // expose
-    return { isRouteLogin };
+    return {
+      isRouteLogin,
+      isLoading,
+      schema,
+      catchError,
+      handleError,
+      // file,
+      // uploadFile,
+      submitForm,
+    };
   },
 };
 </script>
