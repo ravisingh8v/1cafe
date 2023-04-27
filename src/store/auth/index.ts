@@ -4,8 +4,14 @@ import mutations from "./mutations"
 import actions from "./actions"
 export default ({
     namespaced: true,
-    state: {
-        isLoading: false
+    state() {
+        return {
+            userId: null,
+            isLoading: false,
+            isAuthenticated: false,
+            activeUser: null,
+            showGuardAlert: false
+        }
     },
     getters,
     mutations,

@@ -1,3 +1,6 @@
+.main_header {
+  z-index: 10000;
+}
 // nav style
 .nav-link {
   color: $white;
@@ -24,6 +27,7 @@
 }
 .profile_action_wrapper {
   bottom: -90px;
+  z-index: 10000;
   li:not(:last-child) {
     border-bottom: 1px solid $gray;
   }

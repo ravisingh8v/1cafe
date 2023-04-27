@@ -1,7 +1,11 @@
 <template>
   <section class="d-flex flex-column h-100">
     <!-- Header  -->
-    <the-header :isLogin="isLogin"></the-header>
+    <the-header
+      :isLogin="isLogin"
+      :isAuthenticated="isAuthenticated"
+      v-if="true"
+    ></the-header>
     <!-- Router components -->
     <section class="flex-grow-1">
       <router-view v-slot="slotProps">
@@ -18,11 +22,14 @@ import TheHeader from "./component/layout/TheHeader.vue";
 import TheFooter from "./component/layout/TheFooter.vue";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
   components: { TheHeader, TheFooter },
   setup() {
     const route = useRoute();
+    const store = useStore();
+    const isAuthenticated = ref();
     // getting current route to hide footer on login page
     const currentRoute = ref("");
     watch(
@@ -51,9 +58,24 @@ export default {
         : (footer.value = false);
     });
 
+    // checking authentication
+    const isAuth = computed(() => {
+      return store.getters["auth/isAuthenticated"];
+    });
+    watch(
+      isAuth,
+      () => {
+        isAuthenticated.value = isAuth.value;
+      },
+      { immediate: true }
+    );
+
+    store.dispatch("auth/isAuth");
+    store.dispatch("auth/getUserData");
     return {
       isLogin,
       footer,
+      isAuthenticated,
     };
   },
 };
