@@ -14,7 +14,7 @@
         <menu v-if="!fixed">
           <slot name="actions">
             <button class="btn btn-outline-danger" @click="tryClose">
-              Close
+              {{ button ? button : "Close" }}
             </button>
           </slot>
         </menu>
@@ -24,6 +24,8 @@
 </template>
 
 <script lang="ts">
+import { string } from "yup";
+
 export default {
   props: {
     show: {
@@ -34,6 +36,9 @@ export default {
       type: String,
       required: false,
     },
+    button: {
+      type: string,
+    },
     fixed: {
       type: Boolean,
       required: false,
@@ -42,7 +47,7 @@ export default {
   },
   emits: ["close"],
 
-  setup(props, context) {
+  setup(props: any, context: any) {
     function tryClose() {
       if (props.fixed) {
         return;

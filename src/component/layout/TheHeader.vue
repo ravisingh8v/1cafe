@@ -1,6 +1,7 @@
 <template>
+  <!-- v-if="scrolled" -->
   <header
-    class="theme-p bg-dark d-flex justify-content-between align-items-center text-white"
+    class="main_header theme-p bg-dark d-flex justify-content-between align-items-center text-white position-sticky top-0"
   >
     <!-- left section  -->
     <div>
@@ -31,36 +32,36 @@
       <div class="ms-3 d-flex align-items-center position-relative">
         <div
           class="cp user_profile_wrapper d-flex align-items-center justify-content-center"
-          :class="!true ? 'border border-secondary' : 'd-none'"
           @click="openProfileMenu"
+          v-if="isAuthenticated"
         >
-          <img
-            src="./../../assets/images/logo/1Cafe.svg"
-            v-if="!true"
-            alt="profile image"
-          />
+          <span class="material-symbols-outlined"> account_circle </span>
         </div>
-        <div class="ms-2" v-if="!true" @click="openProfileMenu">
-          <a>Ravi Singh</a>
+        <div class="ms-2" v-if="isAuthenticated" @click="openProfileMenu">
+          <a>{{ user }}</a>
         </div>
 
         <div
-          v-if="openMenu"
+          v-if="openMenu && isAuthenticated"
           class="profile_action_wrapper shadow border border-secondary position-absolute w-100 bg-dark"
         >
           <ul>
             <li class="cp p-2"><a>Profile</a></li>
-            <li class="cp p-2"><a>Logout</a></li>
+            <li class="cp p-2" @click="logout">
+              <a>Logout</a>
+            </li>
           </ul>
         </div>
 
-        <div class="ms-2" v-if="isLogin !== '/login'">
-          <RouterLink class="btn btn-primary" to="/login">Log in</RouterLink>
-        </div>
-        <div class="ms-2" v-else>
-          <RouterLink class="btn btn-primary" to="/registration">
-            Registration
-          </RouterLink>
+        <div v-if="!isAuthenticated">
+          <div class="ms-2" v-if="isLogin !== '/login'">
+            <RouterLink class="btn btn-primary" to="/login">Log in</RouterLink>
+          </div>
+          <div class="ms-2" v-else>
+            <RouterLink class="btn btn-primary" to="/registration">
+              Registration
+            </RouterLink>
+          </div>
         </div>
       </div>
     </div>
@@ -69,16 +70,35 @@
 
 <!-- script -->
 <script lang="ts">
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 export default {
-  props: ["isLogin"],
+  props: ["isLogin", "isAuthenticated", "scrolled"],
   setup() {
+    const store = useStore();
     const openMenu = ref(false);
-
+    const router = useRouter();
     function openProfileMenu() {
       openMenu.value = !openMenu.value;
     }
-    return { openMenu, openProfileMenu };
+
+    // getting user
+    const user = ref();
+    const activeUser = computed(() => {
+      return store.getters["auth/activeUser"];
+    });
+    watch(activeUser, () => {
+      user.value = activeUser.value.firstName + " " + activeUser.value.lastName;
+    });
+    // user.value = activeUser.value;
+    function logout() {
+      store.dispatch("auth/logout");
+      openMenu.value = false;
+      router.push("/");
+    }
+
+    return { store, openMenu, openProfileMenu, user, logout };
   },
 };
 </script>

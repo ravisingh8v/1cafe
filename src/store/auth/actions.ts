@@ -2,11 +2,17 @@ import { user } from "@/views/auth/model/ModelRegistration"
 import axios from "axios"
 
 export default {
-    // register user into database 
+
+    /**
+     * register user into database 
+     * @param context 
+     * @param payload 
+     */
     async registration(context: any, payload: user) {
         context.commit('isLoading', true)
+        const userId = context.getters.userId
         try {
-            axios.post("https://cafe-410be-default-rtdb.firebaseio.com/users.json", payload)
+            axios.put(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}.json`, payload)
             // const responseData = await response
             // if (responseData) {
             context.commit('isLoading', false)
@@ -17,13 +23,18 @@ export default {
         // context.commit('registration', payload)
     },
 
-    // signup
+    /**
+     * Sign Up 
+     * @param context 
+     * @param payload 
+     */
     async signUpWithEmailPassword(context: any, payload: user) {
         context.commit('isLoading', true)
         try {
-            const response = axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E", { email: payload.email, password: payload.password, returnSecureToken: true })
-            const responseData = await response
+            const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E", { email: payload.email, password: payload.password, returnSecureToken: true })
+            const responseData = await response.data
             context.commit('isLoading', false)
+            context.commit('setUserId', responseData.localId)
             console.log(responseData);
 
         } catch (error: any) {
@@ -42,5 +53,76 @@ export default {
 
         }
 
+    },
+
+    /**
+     * login
+     */
+    async userLogin(context: any, payload: user) {
+        context.commit('isLoading', true)
+        try {
+            const response = await axios.post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E', { email: payload.email, password: payload.password, returnSecureToken: true })
+            const responseData = await response.data
+            const user = await {
+                userId: responseData.localId,
+                email: responseData.email,
+                tokenId: responseData.idToken,
+                expirationTime: responseData.expiresIn
+            }
+            localStorage.setItem('userId', user.userId)
+            localStorage.setItem('token', user.tokenId)
+            localStorage.setItem('expirationTime', user.expirationTime)
+
+            const authenticate = () => {
+                if (localStorage.getItem('token')?.length && localStorage.getItem('token')) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+            context.commit('setAuthentication', authenticate)
+            context.commit('setUserId', user.userId)
+            context.commit('isLoading', false)
+
+        }
+        catch (responseData: any) {
+            context.commit('isLoading', false)
+            const error = 'something went wrong please try again later'
+            throw error
+        }
+    },
+
+    // 
+    /**
+     *  getting current user
+     * @param context set user in activeUser state by committing to setUser Mutations
+     */
+    async getUserData(context: any) {
+        // const userId = context.getters.userId;
+        const userId = localStorage.getItem('userId')
+        try {
+            await axios.get(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}.json`)
+                .then((response) => {
+                    const responseData = response.data
+                    context.commit('setUser', responseData)
+                })
+        } catch (responseData: any) {
+            const error = responseData
+            throw error
+        }
+    },
+
+    isAuth(context: any) {
+        const token = localStorage.getItem('token')
+        if (token) {
+            context.commit('setAuthentication', true)
+        } else {
+            context.commit('setAuthentication', false)
+        }
+    },
+    logout(context: any) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+        context.commit('setAuthentication', false)
     }
 }
