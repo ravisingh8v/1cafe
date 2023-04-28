@@ -13,7 +13,9 @@
           </h2>
         </div>
         <div class="my-4">
-          <button class="btn btn-outline-secondary">Order Now</button>
+          <router-link class="btn btn-outline-secondary" to="/order"
+            >Order Now</router-link
+          >
         </div>
       </div>
     </section>
@@ -34,7 +36,9 @@
               of our product this is dummy text here.
             </p>
             <div>
-              <button class="btn btn-outline-secondary">See More</button>
+              <router-link to="/order" class="btn btn-outline-secondary"
+                >See More</router-link
+              >
             </div>
           </div>
         </div>
@@ -53,7 +57,9 @@
               of our product this is dummy text here.
             </p>
             <div>
-              <button class="btn btn-outline-secondary">See More</button>
+              <router-link to="/order" class="btn btn-outline-secondary"
+                >See More</router-link
+              >
             </div>
           </div>
         </div>

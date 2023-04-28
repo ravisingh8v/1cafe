@@ -68,13 +68,13 @@ export default {
     });
 
     watch(isLoading, () => {
-      isLoading.value = store.getters["auth/isLoading"];
+      isLoading.value = store.getters["isLoading"];
     });
 
     watch(
-      () => store.getters["auth/isLoading"],
+      () => store.getters["isLoading"],
       () => {
-        isLoading.value = store.getters["auth/isLoading"];
+        isLoading.value = store.getters["isLoading"];
       }
     );
 

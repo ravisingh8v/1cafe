@@ -1,8 +1,6 @@
 export default ({
 
-    isLoading(state: any) {
-        return state.isLoading
-    },
+
     userId(state: any) {
         return state.userId
     },
