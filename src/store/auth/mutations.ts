@@ -1,7 +1,5 @@
 export default {
-    isLoading(state: any, payload: any) {
-        state.isLoading = payload
-    },
+
     setUserId(state: any, payload: any) {
         state.userId = payload
     },

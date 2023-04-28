@@ -74,14 +74,25 @@ import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 export default {
-  props: ["isLogin", "isAuthenticated", "scrolled"],
-  setup() {
+  props: ["isLogin", "isAuthenticated", "scrolled", "menu"],
+  setup(props: any, context: any) {
     const store = useStore();
-    const openMenu = ref(false);
     const router = useRouter();
+
+    // for profile menu
+    const openMenu = ref(false);
+
     function openProfileMenu() {
       openMenu.value = !openMenu.value;
+      context.emit("openMenu", openMenu.value);
     }
+    const menuComp = computed(() => {
+      return props.menu;
+    });
+    watch(menuComp, () => {
+      openMenu.value = menuComp.value;
+      console.log(menuComp.value);
+    });
 
     // getting user
     const user = ref();

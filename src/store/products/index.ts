@@ -1,19 +1,17 @@
-// importing auth stores 
 import getters from "./getters"
 import mutations from "./mutations"
 import actions from "./actions"
+
+// importing product store 
 export default ({
     namespaced: true,
     state() {
         return {
-            userId: null,
-            // isLoading: false,
-            isAuthenticated: false,
-            activeUser: null,
-            showGuardAlert: false
+            allProducts: null
         }
     },
     getters,
     mutations,
-    actions
+    actions,
+
 })

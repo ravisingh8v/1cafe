@@ -14,13 +14,12 @@ body {
 .theme-p {
   padding: 20px;
 }
-%bg-image-properties {
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 
 // error msg
 .invalid-text {
   font-size: 12px;
+}
+
+.hero-para {
+  font-family: $font-family-cursive;
 }

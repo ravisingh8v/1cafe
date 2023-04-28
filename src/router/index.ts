@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   { path: '/contact', component: HomeView, meta: { requireAuth: true } },
-  { path: '/order', component: HomeView, meta: { requireAuth: true } },
+  { path: '/order', component: () => import('../views/OrderView.vue'), meta: { requireAuth: true } },
   { path: '/login', component: () => import('../views/auth/BaseAuthView.vue') },
   { path: '/registration', component: () => import('../views/auth/BaseAuthView.vue') }
 
@@ -29,7 +29,15 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
   linkActiveClass: "active",
+  scrollBehavior(_1, _2, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0, left: 0 }
+    }
+  }
 })
+// guard 
 router.beforeEach((to, _, next) => {
   if (to.meta.requireAuth && !store.getters['auth/isAuthenticated']) {
     store.commit('auth/showGuardAlert', true)
@@ -37,6 +45,9 @@ router.beforeEach((to, _, next) => {
   } else {
     next()
   }
+  // console.log(to);
+
 })
+
 
 export default router

@@ -1,13 +1,15 @@
 <template>
   <section class="d-flex flex-column h-100">
+    <base-spinner v-if="isLoading"></base-spinner>
     <!-- Header  -->
     <the-header
       :isLogin="isLogin"
       :isAuthenticated="isAuthenticated"
-      v-if="true"
+      :menu="menu"
+      @openMenu="openMenu"
     ></the-header>
     <!-- Router components -->
-    <section class="flex-grow-1">
+    <section class="flex-grow-1" @click="menuFn">
       <router-view v-slot="slotProps">
         <transition mode="out-in" name="route">
           <component :is="slotProps.Component"></component>
@@ -50,13 +52,17 @@ export default {
 
     // to showing footer when route is ready
     const footer = ref();
-    watch(isLogin, () => {
-      isLogin.value == false
-        ? setTimeout(() => {
-            footer.value = true;
-          }, 1000)
-        : (footer.value = false);
-    });
+    watch(
+      isLogin,
+      () => {
+        isLogin.value == false
+          ? setTimeout(() => {
+              footer.value = true;
+            }, 1000)
+          : (footer.value = false);
+      },
+      { immediate: true }
+    );
 
     // checking authentication
     const isAuth = computed(() => {
@@ -70,12 +76,37 @@ export default {
       { immediate: true }
     );
 
+    // for profile menu close
+    const menu = ref();
+    function openMenu(value: any) {
+      if (value == true) {
+        menu.value = true;
+      } else {
+        menu.value = false;
+      }
+    }
+    function menuFn() {
+      menu.value = false;
+    }
+    // end
     store.dispatch("auth/isAuth");
     store.dispatch("auth/getUserData");
+    const isLoading = ref();
+    const isLoadings = computed(() => {
+      return store.getters["isLoading"];
+    });
+    watch(isLoadings, () => {
+      isLoading.value = isLoadings.value;
+    });
+
     return {
       isLogin,
       footer,
       isAuthenticated,
+      menu,
+      menuFn,
+      openMenu,
+      isLoading,
     };
   },
 };
