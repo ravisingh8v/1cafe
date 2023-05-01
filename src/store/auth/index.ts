@@ -7,7 +7,7 @@ export default ({
     state() {
         return {
             userId: null,
-            // isLoading: false,
+            isLoading: false,
             isAuthenticated: false,
             activeUser: null,
             showGuardAlert: false

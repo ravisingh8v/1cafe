@@ -30,15 +30,17 @@
       </nav>
       <!-- profile  -->
       <div class="ms-3 d-flex align-items-center position-relative">
-        <div
-          class="cp user_profile_wrapper d-flex align-items-center justify-content-center"
-          @click="openProfileMenu"
-          v-if="isAuthenticated"
-        >
-          <span class="material-symbols-outlined"> account_circle </span>
-        </div>
-        <div class="ms-2" v-if="isAuthenticated" @click="openProfileMenu">
-          <a>{{ user }}</a>
+        <div class="user_wrapper d-flex align-items-center">
+          <div
+            class="cp user_profile_wrapper d-flex align-items-center justify-content-center"
+            @click="openProfileMenu"
+            v-if="isAuthenticated"
+          >
+            <span class="material-symbols-outlined"> account_circle </span>
+          </div>
+          <div class="ms-2" v-if="isAuthenticated" @click="openProfileMenu">
+            <a>{{ user }}</a>
+          </div>
         </div>
 
         <div
@@ -46,8 +48,12 @@
           class="profile_action_wrapper shadow border border-secondary position-absolute w-100 bg-dark"
         >
           <ul>
-            <li class="cp p-2"><a>Profile</a></li>
-            <li class="cp p-2" @click="logout">
+            <li class="cp p-2 d-flex align-items-center">
+              <span class="me-1 material-symbols-outlined"> person </span>
+              <a>Profile</a>
+            </li>
+            <li class="cp p-2 d-flex align-items-center" @click="logout">
+              <span class="me-1 material-symbols-outlined"> logout </span>
               <a>Logout</a>
             </li>
           </ul>
@@ -91,7 +97,6 @@ export default {
     });
     watch(menuComp, () => {
       openMenu.value = menuComp.value;
-      console.log(menuComp.value);
     });
 
     // getting user
@@ -106,7 +111,7 @@ export default {
     function logout() {
       store.dispatch("auth/logout");
       openMenu.value = false;
-      router.push("/");
+      router.push("/login");
     }
 
     return { store, openMenu, openProfileMenu, user, logout };

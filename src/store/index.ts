@@ -6,17 +6,17 @@ import products from './products'
 
 export default createStore({
   state: {
-    isLoading: null
   },
   getters: {
-    isLoading(state: any) {
-      return state.isLoading
+    isLoading(_: any, rootState: any) {
+      return rootState['products/isLoading'] || rootState['auth/isLoading']
+
     }
   },
   mutations: {
-    isLoading(state: any, payload: any) {
-      state.isLoading = payload
-    },
+    // isLoading(state: any, payload: any) {
+    //   state.isLoading = payload
+    // },
   },
   actions: {
   },

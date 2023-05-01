@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   { path: '/contact', component: HomeView, meta: { requireAuth: true } },
   { path: '/order', component: () => import('../views/OrderView.vue'), meta: { requireAuth: true } },
-  { path: '/login', component: () => import('../views/auth/BaseAuthView.vue') },
+  { path: '/login', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },
   { path: '/registration', component: () => import('../views/auth/BaseAuthView.vue') }
 
 ]
@@ -42,6 +42,8 @@ router.beforeEach((to, _, next) => {
   if (to.meta.requireAuth && !store.getters['auth/isAuthenticated']) {
     store.commit('auth/showGuardAlert', true)
     next('/login')
+  } else if (to.meta.requireAuth == false && store.getters['auth/isAuthenticated']) {
+    next('/order')
   } else {
     next()
   }
