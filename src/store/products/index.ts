@@ -7,7 +7,9 @@ export default ({
     namespaced: true,
     state() {
         return {
-            allProducts: null
+            allProducts: null,
+            isLoading: false,
+            productDetails: ''
         }
     },
     getters,

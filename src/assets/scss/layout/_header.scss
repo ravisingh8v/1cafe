@@ -11,12 +11,19 @@
     }
   }
 }
+// user
+.user_wrapper {
+  &:hover {
+    color: $primary;
+  }
+}
 // profile
 .user_profile_wrapper {
   width: 30px;
   height: 30px;
   overflow: hidden;
   border-radius: 50%;
+
   span .material-symbols-outlined {
     font-size: 30px;
   }
@@ -27,8 +34,11 @@
 }
 .profile_action_wrapper {
   bottom: -90px;
-  z-index: 10000;
+  z-index: 1000;
   li:not(:last-child) {
     border-bottom: 1px solid $gray;
+  }
+  li:hover {
+    background-color: $gray;
   }
 }

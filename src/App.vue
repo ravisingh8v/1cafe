@@ -93,7 +93,7 @@ export default {
     store.dispatch("auth/getUserData");
     const isLoading = ref();
     const isLoadings = computed(() => {
-      return store.getters["isLoading"];
+      return store.getters.isLoading;
     });
     watch(isLoadings, () => {
       isLoading.value = isLoadings.value;

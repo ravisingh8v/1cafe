@@ -33,7 +33,7 @@
       <div>
         <button type="submit" class="btn btn-primary">
           Login
-          <span v-if="isLoading"> ....</span>
+          <!-- <span v-if="isLoading"> ....</span> -->
         </button>
       </div>
       <!-- <div class="my-2">

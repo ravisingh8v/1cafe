@@ -5,27 +5,42 @@
 
     <!-- navigation  -->
     <section class="theme-p mt-3">
-      <nav class="px-1 order_breadcrumb border-bottom text-secondary">
-        <a
-          to="/"
-          class="pe-2 ps-1"
-          :class="
-            isBakery ? 'text-primary border-bottom border-3 border-primary' : ''
-          "
-          @click="activeComponent('bakery')"
-          >Bakery</a
-        >
-        <a
-          to="/"
-          class="ps-2"
-          @click="activeComponent('breakfast')"
-          :class="
-            !isBakery
-              ? 'text-primary border-bottom border-3 border-primary'
-              : ''
-          "
-          >Breakfast</a
-        >
+      <nav
+        class="px-1 d-flex justify-content-between order_breadcrumb border-bottom text-secondary position-relative"
+      >
+        <div>
+          <a
+            to="/"
+            class="pe-2 ps-1"
+            :class="
+              isBakery
+                ? 'text-primary border-bottom border-3 border-primary'
+                : ''
+            "
+            @click="activeComponent('bakery')"
+            >Bakery</a
+          >
+          <a
+            to="/"
+            class="ps-2"
+            @click="activeComponent('breakfast')"
+            :class="
+              !isBakery
+                ? 'text-primary border-bottom border-3 border-primary'
+                : ''
+            "
+            >Breakfast</a
+          >
+        </div>
+        <div class="card_btn position-absolute end-0">
+          <button
+            class="py-2 px-4 btn btn-secondary d-flex align-items-center"
+            @click="viewCart"
+          >
+            <span class="material-symbols-outlined me-2"> shopping_cart </span
+            ><span class="me-2">View Cart</span> {{ "$0" }}
+          </button>
+        </div>
       </nav>
 
       <!-- router view  -->
@@ -37,28 +52,58 @@
 
       <section class="px-1 mt-5">
         <Transition name="route" mode="out-in">
-          <component :is="currentComponent"></component>
+          <component
+            :is="currentComponent"
+            @getDetails="getDetails"
+          ></component>
         </Transition>
       </section>
     </section>
+    <!-- overlay component  -->
+    <Transition name="overlay">
+      <section
+        v-if="productDetail || cartDetails"
+        @click="(productDetail = null), (cartDetails = false)"
+        class="product_details_wrapper position-fixed top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center"
+      >
+        <product-detail
+          v-if="productDetail"
+          :productDetail="productDetail"
+          @cartAdded="cartAdded"
+        ></product-detail>
+        <CartDetails v-else></CartDetails>
+      </section>
+    </Transition>
   </section>
 </template>
 <script lang="ts">
 import OrderHero from "@/component/layout/OrderHero.vue";
 import BakeryList from "@/component/product/bakery/BakeryList.vue";
 import BreakfastList from "@/component/product/breakfast/BreakfastList.vue";
+import ProductDetail from "@/component/product/product-details/ProductDetail.vue";
+
 import { useStore } from "vuex";
-import { shallowRef, ref, computed, watch, provide } from "vue";
-export default {
-  components: { OrderHero, BakeryList },
+import {
+  shallowRef,
+  ref,
+  computed,
+  watch,
+  provide,
+  defineComponent,
+} from "vue";
+import CartDetails from "@/component/cart/CartDetails.vue";
+export default defineComponent({
+  components: { OrderHero, BakeryList, ProductDetail, CartDetails },
   setup() {
     const store = useStore();
-    const currentComponent = shallowRef(BakeryList);
+    // for active component
+    const currentComponent = shallowRef();
+    // default component
     const isBakery = ref(true);
 
+    // for dynamic component bakery and breakfast
+    currentComponent.value = BakeryList;
     function activeComponent(value: string) {
-      console.log("hello");
-
       if (value == "bakery") {
         isBakery.value = true;
         currentComponent.value = BakeryList;
@@ -71,7 +116,6 @@ export default {
     // get products
     const allBakeryProduct = ref();
     const allBreakfastProduct = ref();
-
     const products = computed(() => {
       return store.getters["products/allProducts"];
     });
@@ -83,17 +127,66 @@ export default {
         (res: any) => res.category == "breakfast"
       );
     });
+
+    // get details function and sending to another component
+    const productDetail = ref();
+    function getDetails(value: any) {
+      productDetail.value = value;
+      // router.push("");
+    }
+
+    // view cart
+    const cartDetails = ref();
+    cartDetails.value = false;
+    function viewCart() {
+      cartDetails.value = true;
+    }
+
+    //when cart added
+    function cartAdded(value: any) {
+      if (value == true) {
+        productDetail.value = null;
+      }
+    }
+    // provide this to bakery and breakfast component
     provide("allBakeryProduct", allBakeryProduct);
     provide("allBreakfastProduct", allBreakfastProduct);
 
+    // calling stores action method here
     store.dispatch("products/getAllProducts");
+    store.dispatch("products/getCartData");
+    // return
     return {
       currentComponent,
       activeComponent,
       isBakery,
-      allBakeryProduct,
-      allBreakfastProduct,
+      getDetails,
+      viewCart,
+      productDetail,
+      cartDetails,
+      cartAdded,
     };
   },
-};
+});
 </script>
+<style lang="scss">
+// animation
+.overlay-enter-from {
+  opacity: 0;
+}
+.overlay-enter-active {
+  transition: all 0.35s ease-out;
+}
+.overlay-enter-to {
+  opacity: 1;
+}
+.overlay-leave-from {
+  opacity: 1;
+}
+.overlay-leave-active {
+  transition: all 0.25s ease-out;
+}
+.overlay-leave-to {
+  opacity: 0;
+}
+</style>

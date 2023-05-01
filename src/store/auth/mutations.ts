@@ -11,5 +11,8 @@ export default {
     },
     showGuardAlert(state: any, payload: any) {
         state.showGuardAlert = payload
-    }
+    },
+    isLoading(state: any, payload: any) {
+        state.isLoading = payload;
+    },
 }

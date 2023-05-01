@@ -25,16 +25,13 @@
         </h1>
         <!-- import slot -->
         <base-card>
+          <!-- :isLoading="isLoading" -->
           <UserRegistration
             @submitForm="submitForm"
-            :isLoading="isLoading"
             v-if="!isRouteLogin"
           ></UserRegistration>
-          <UserLogin
-            @submitForm="submitForm"
-            :isLoading="isLoading"
-            v-else
-          ></UserLogin>
+          <!-- :isLoading="isLoading" -->
+          <UserLogin @submitForm="submitForm" v-else></UserLogin>
         </base-card>
       </div>
     </div>
@@ -60,23 +57,23 @@ export default {
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const isLoading = ref();
+    // const isLoading = ref();
     const store = useStore();
     const isRouteLogin = ref();
     const currentRoute = computed(() => {
       return route.path;
     });
 
-    watch(isLoading, () => {
-      isLoading.value = store.getters["isLoading"];
-    });
+    // watch(isLoading, () => {
+    //   isLoading.value = store.getters["isLoading"];
+    // });
 
-    watch(
-      () => store.getters["isLoading"],
-      () => {
-        isLoading.value = store.getters["isLoading"];
-      }
-    );
+    // watch(
+    //   () => store.getters["auth/isLoading"],
+    //   () => {
+    //     isLoading.value = store.getters["auth/isLoading"];
+    //   }
+    // );
 
     // watch on change route to manipulate data according to registration and login
     watch(
@@ -159,7 +156,7 @@ export default {
       isRouteLogin,
       catchError,
       handleError,
-      isLoading,
+      // isLoading,
       // file,
       // uploadFile,
       submitForm,
