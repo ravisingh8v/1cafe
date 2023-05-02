@@ -4,5 +4,8 @@ export default {
     },
     isLoading(state: any, payload: any) {
         state.isLoading = payload
+    },
+    getCartData(state: any, payload: any) {
+        state.cartData = payload
     }
 }

@@ -9,7 +9,8 @@ export default ({
         return {
             allProducts: null,
             isLoading: false,
-            productDetails: ''
+            productDetails: '',
+            cartData: null
         }
     },
     getters,

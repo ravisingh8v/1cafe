@@ -29,3 +29,9 @@ h3 {
   font-family: $font-family-cursive;
   font-size: $font-size-headings;
 }
+.close_button {
+  transition: all 0.35s ease-in-out;
+  &:hover {
+    color: $danger;
+  }
+}

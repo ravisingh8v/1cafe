@@ -3,8 +3,8 @@
     <h3 class="fs-3">Bakery</h3>
     <div class="row mt-3 gx-5 gy-5">
       <BakeryItem
-        v-for="bakery in allBakeryProduct"
-        :key="bakery.id"
+        v-for="(bakery, index) in allBakeryProduct"
+        :key="index"
         :bakery="bakery"
         @getDetails="$emit('getDetails', $event)"
       ></BakeryItem>
@@ -15,7 +15,7 @@
 import BakeryItem from "./BakeryItem.vue";
 import { inject } from "vue";
 export default {
-  //   props: ["allBakeryProduct"],
+  // props: ["allBakeryProduct"],
   components: { BakeryItem },
   setup() {
     const allBakeryProduct: any = inject("allBakeryProduct");
