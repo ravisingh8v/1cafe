@@ -4,8 +4,8 @@
 
     <div class="row mt-3 gx-5 gy-5">
       <BreakfastItem
-        v-for="breakfast in allBreakfastProduct"
-        :key="breakfast.id"
+        v-for="(breakfast, index) in allBreakfastProduct"
+        :key="index"
         :breakfast="breakfast"
         @getDetails="$emit('getDetails', $event)"
       ></BreakfastItem>

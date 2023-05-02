@@ -45,6 +45,11 @@ export default {
     const price = ref();
     quantity.value = 1;
     watch(quantity, () => {
+      if (quantity.value >= 10) {
+        quantity.value = 10;
+      } else if (quantity.value <= 1) {
+        quantity.value = 1;
+      }
       console.log(quantity.value);
     });
 

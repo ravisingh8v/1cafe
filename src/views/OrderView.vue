@@ -37,8 +37,12 @@
             class="py-2 px-4 btn btn-secondary d-flex align-items-center"
             @click="viewCart"
           >
-            <span class="material-symbols-outlined me-2"> shopping_cart </span
-            ><span class="me-2">View Cart</span> {{ "$0" }}
+            <span class="p-2 material-symbols-outlined me-2 position-relative">
+              shopping_cart<span
+                class="position-absolute top-0 end-0 cart_item_count rounded-circle bg-danger"
+                >{{ cartItems }}</span
+              > </span
+            ><span class="me-2">View Cart</span>
           </button>
         </div>
       </nav>
@@ -71,7 +75,11 @@
           :productDetail="productDetail"
           @cartAdded="cartAdded"
         ></product-detail>
-        <CartDetails v-else></CartDetails>
+        <CartDetails
+          v-else
+          @close="cartDetails = false"
+          :cartData="cartData"
+        ></CartDetails>
       </section>
     </Transition>
   </section>
@@ -114,8 +122,8 @@ export default defineComponent({
     }
 
     // get products
-    const allBakeryProduct = ref();
-    const allBreakfastProduct = ref();
+    const allBakeryProduct: any = ref();
+    const allBreakfastProduct: any = ref();
     const products = computed(() => {
       return store.getters["products/allProducts"];
     });
@@ -136,6 +144,17 @@ export default defineComponent({
     }
 
     // view cart
+    const cartData = ref();
+    const cartItems = ref();
+    // cartData.value = store.getters["products/cartData"];
+    const carts = computed(() => {
+      return store.getters["products/cartData"];
+    });
+    watch(carts, () => {
+      cartData.value = carts.value;
+      cartItems.value = carts.value.length;
+    });
+
     const cartDetails = ref();
     cartDetails.value = false;
     function viewCart() {
@@ -148,6 +167,9 @@ export default defineComponent({
         productDetail.value = null;
       }
     }
+    // getting cart data
+    // const cartData =
+
     // provide this to bakery and breakfast component
     provide("allBakeryProduct", allBakeryProduct);
     provide("allBreakfastProduct", allBreakfastProduct);
@@ -165,6 +187,8 @@ export default defineComponent({
       productDetail,
       cartDetails,
       cartAdded,
+      cartData,
+      cartItems,
     };
   },
 });

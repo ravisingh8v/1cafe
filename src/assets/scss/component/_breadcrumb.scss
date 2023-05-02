@@ -9,4 +9,14 @@
   .card_btn {
     top: -20px;
   }
+  .cart_item_count {
+    font-size: 11px;
+    padding: 3px;
+    // top: -8px;
+    // right: -8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: $font-family-base;
+  }
 }
