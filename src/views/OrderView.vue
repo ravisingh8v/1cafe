@@ -79,6 +79,8 @@
           v-else
           @close="cartDetails = false"
           :cartData="cartData"
+          @itemDeleted="itemDeleted"
+          @editItem="editCartItem"
         ></CartDetails>
       </section>
     </Transition>
@@ -100,6 +102,7 @@ import {
   defineComponent,
 } from "vue";
 import CartDetails from "@/component/cart/CartDetails.vue";
+import { Cart } from "@/component/cart/model/CartModel";
 export default defineComponent({
   components: { OrderHero, BakeryList, ProductDetail, CartDetails },
   setup() {
@@ -167,8 +170,16 @@ export default defineComponent({
         productDetail.value = null;
       }
     }
+    function editCartItem(cartData: Cart) {
+      if (cartData) {
+        productDetail.value = cartData;
+      }
+    }
     // getting cart data
     // const cartData =
+    function itemDeleted(value: number) {
+      cartItems.value = value;
+    }
 
     // provide this to bakery and breakfast component
     provide("allBakeryProduct", allBakeryProduct);
@@ -177,6 +188,7 @@ export default defineComponent({
     // calling stores action method here
     store.dispatch("products/getAllProducts");
     store.dispatch("products/getCartData");
+
     // return
     return {
       currentComponent,
@@ -189,6 +201,8 @@ export default defineComponent({
       cartAdded,
       cartData,
       cartItems,
+      itemDeleted,
+      editCartItem,
     };
   },
 });

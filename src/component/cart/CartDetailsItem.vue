@@ -12,7 +12,12 @@
       <div class="ms-2">
         <p class="m-0">{{ cart.title }}</p>
         <div>
-          <a class="text-primary p-0 ms-1 me-1"> Edit </a>
+          <a
+            class="text-primary p-0 ms-1 me-1"
+            @click="$emit('editItem', cart)"
+          >
+            Edit
+          </a>
           <a class="text-danger p-0 ms-1" @click="$emit('deleteItem', cart.id)">
             Delete
           </a>

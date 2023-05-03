@@ -31,6 +31,7 @@ export default {
     async signUpWithEmailPassword(context: any, payload: user) {
         context.commit('isLoading', true)
         try {
+            process.env.VUE_APP_BASE_URL
             const response = await axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E", { email: payload.email, password: payload.password, returnSecureToken: true })
             const responseData = await response.data
             context.commit('isLoading', false)

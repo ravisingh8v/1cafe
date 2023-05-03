@@ -10,15 +10,16 @@ const routes: Array<RouteRecordRaw> = [
     name: 'home',
     component: HomeView
   },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  },
+  // {
+  //   path: '/about',
+  //   name: 'about',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  // },
   { path: '/contact', component: HomeView, meta: { requireAuth: true } },
+  { path: '/about', component: () => import('../component/home/HomeFeed.vue') },
   { path: '/order', component: () => import('../views/OrderView.vue'), meta: { requireAuth: true } },
   { path: '/login', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },
   { path: '/registration', component: () => import('../views/auth/BaseAuthView.vue') }

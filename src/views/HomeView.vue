@@ -22,7 +22,8 @@
     <!-- carousel imported here  -->
     <hero-carousel></hero-carousel>
     <main class="home_main_wrapper">
-      <div class="row gx-0">
+      <home-feed></home-feed>
+      <!-- <div class="row gx-0">
         <div
           class="col-6 items d-flex align-items-center justify-content-center"
         >
@@ -63,15 +64,16 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </main>
   </div>
 </template>
 
 <script lang="ts">
+import HomeFeed from "@/component/home/HomeFeed.vue";
 import HeroCarousel from "./../component/home/HeroCarousel.vue";
 import { defineComponent } from "vue";
 export default defineComponent({
-  components: { HeroCarousel },
+  components: { HeroCarousel, HomeFeed },
 });
 </script>
