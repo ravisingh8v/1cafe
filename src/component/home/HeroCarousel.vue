@@ -47,6 +47,7 @@ export default {
       },
       { immediate: true }
     );
+    // auto movement
     setInterval(() => {
       if (count.value == 2) {
         count.value = 1;
@@ -54,7 +55,9 @@ export default {
         count.value = 2;
       }
     }, 5000);
+
     // function
+    // previous slide
     function prev(value: number) {
       if (count.value > 1) {
         count.value = value - 1;
@@ -62,6 +65,7 @@ export default {
         count.value = 2;
       }
     }
+    // next slide
     function next(value: number) {
       if (count.value < 2) {
         count.value = value + 1;

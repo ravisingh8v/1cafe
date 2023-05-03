@@ -4,7 +4,7 @@ export default {
     getAllProducts(context: any) {
         context.commit('isLoading', true)
 
-        axios.get('https://cafe-410be-default-rtdb.firebaseio.com/products.json').then((response) => {
+        axios.get(`${process.env.VUE_APP_BASE_URL}products.json`).then((response) => {
             const responseData = [];
             for (const key in response.data) {
                 const data = {
@@ -26,29 +26,48 @@ export default {
         })
     },
 
-
+    /**
+     * 
+     * @param context 
+     * @param payload 
+     */
 
     async addToCart(context: any, payload: any) {
+        context.commit('isLoading', true)
         const userId = localStorage.getItem('userId')
+        // id is greater than 5 means its firebase auto generated id 
+        if (payload.id.length > 5) {
+            const cartId = payload.id
+            axios.put(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart/${cartId}.json`, { ...payload }).then((response) => {
+                console.log(response);
+                context.commit('isLoading', false)
+                context.dispatch('getCartData')
+            }).catch(() => {
+                context.commit('isLoading', false)
+            })
+            // if its manual generated id
+        } else {
+            axios.post(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart.json`, { ...payload }).then((response) => {
+                console.log(response);
+                context.commit('isLoading', false)
+                context.dispatch('getCartData')
+            }).catch(() => {
+                context.commit('isLoading', false)
+            })
+        }
         // console.log(userId);
         // console.log(context);
-        context.commit('isLoading', true)
 
-        axios.post(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}/cart.json`, { ...payload }).then((response) => {
-            console.log(response);
-            context.commit('isLoading', false)
-            context.dispatch('getCartData')
-        }).catch(() => {
-            context.commit('isLoading', false)
-        })
 
     },
-
-    // get Cart Data 
+    /**
+     * get Cart Data
+     * @param context 
+     */
     getCartData(context: any) {
         const userId = localStorage.getItem('userId')
         context.commit('isLoading', true)
-        axios.get(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}/cart.json`).then((response: any) => {
+        axios.get(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart.json`).then((response: any) => {
             const responseData = [];
             for (const key in response.data) {
                 const responses = response.data[key]
@@ -73,10 +92,15 @@ export default {
         })
     },
 
-    async deleteCartItem(context: any, payload: any) {
+    /**
+     * 
+     * @param context 
+     * @param payload 
+     */
+    async deleteCartItem(_: any, payload: any) {
         const userId = localStorage.getItem('userId')
         const cartItemId = payload;
-        await axios.delete(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}/cart/${cartItemId}.json`).then((response) => {
+        await axios.delete(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart/${cartItemId}.json`).then((response) => {
             console.log(response);
         })
     }

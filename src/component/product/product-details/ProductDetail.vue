@@ -35,6 +35,7 @@
 </template>
 <script lang="ts">
 import { useStore } from "vuex";
+import { onMounted } from "vue";
 import { ref, watch, computed } from "vue";
 export default {
   props: ["productDetail"],
@@ -44,14 +45,18 @@ export default {
     const quantity = ref();
     const price = ref();
     quantity.value = 1;
-    watch(quantity, () => {
-      if (quantity.value >= 10) {
-        quantity.value = 10;
-      } else if (quantity.value <= 1) {
-        quantity.value = 1;
-      }
-      console.log(quantity.value);
-    });
+    watch(
+      quantity,
+      () => {
+        if (quantity.value >= 10) {
+          quantity.value = 10;
+        } else if (quantity.value <= 1) {
+          quantity.value = 1;
+        }
+        console.log(quantity.value);
+      },
+      { immediate: true }
+    );
 
     const prices = computed(() => {
       return props.productDetail.price;
@@ -83,6 +88,7 @@ export default {
      * Add To Cart Product
      */
     async function addToCart() {
+      console.log(props.productDetail);
       try {
         store.dispatch("products/addToCart", {
           ...props.productDetail,
@@ -97,6 +103,12 @@ export default {
         // props.productDetail = null;
       }
     }
+    // user click to edit cart data
+    onMounted(() => {
+      if (props.productDetail.quantity) {
+        quantity.value = props.productDetail.quantity;
+      }
+    });
     return { quantity, price, addQuantity, removeQuantity, addToCart };
   },
 };

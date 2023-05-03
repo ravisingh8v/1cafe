@@ -8,6 +8,7 @@
         <!-- title  -->
         <div
           class="p-4 d-flex justify-content-between position-sticky top-0 bg-white"
+          style="z-index: 200"
         >
           <h3 class="fs-2">My Orders</h3>
           <span
@@ -17,24 +18,39 @@
           >
         </div>
         <!-- items  -->
-        <div class="mt-4 px-4">
+        <TransitionGroup
+          tag="div"
+          mode="out-in"
+          class="mt-4 position-relative px-4 overflow-hidden"
+          name="cart"
+        >
           <!-- cart 1 -->
-          <TransitionGroup tag="div" name="cart" mode="out-in">
-            <CartDetailsItem
-              v-for="(cart, index) in carts"
-              :key="index"
-              :cart="cart"
-              @deleteItem="deleteItem"
-            ></CartDetailsItem>
-          </TransitionGroup>
-        </div>
-        <!-- break line  -->
-        <div class="border-top mt-3"></div>
-        <!-- subtotal -->
-        <div class="d-flex justify-content-between px-4 p-2">
-          <span>Subtotal</span>
-          <span>${{ subTotal }}</span>
-        </div>
+          <CartDetailsItem
+            v-for="cart in carts"
+            :key="cart.id.toString()"
+            :cart="cart"
+            @deleteItem="deleteItem"
+            @editItem="$emit('editItem', $event)"
+          ></CartDetailsItem>
+          <!-- break line  -->
+          <div
+            v-if="show && carts"
+            :key="'horizontal'"
+            class="border-top mt-3 horizontal_line"
+          ></div>
+
+          <!-- subtotal -->
+          <div
+            v-if="show && carts"
+            :key="'subTotal'"
+            class="d-flex justify-content-between px-4 p-2"
+          >
+            <span>Subtotal</span>
+            <span>${{ subTotal }}</span>
+          </div>
+          <!-- div to help in transition smoother  -->
+          <div class="py-5" key="space"></div>
+        </TransitionGroup>
       </div>
       <!-- bottom  -->
       <!-- checkout -->
@@ -45,9 +61,10 @@
   </div>
 </template>
 <script lang="ts">
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, Ref } from "vue";
 import { useStore } from "vuex";
 import CartDetailsItem from "./CartDetailsItem.vue";
+import { Cart } from "./model/CartModel";
 export default {
   components: { CartDetailsItem },
   props: {
@@ -55,11 +72,12 @@ export default {
       type: Object,
     },
   },
-  setup(props: any) {
+  setup(props: any, context: any) {
     const store = useStore();
     store.dispatch("products/getCartData");
+
     // subtotal price
-    const subTotal = ref();
+    const subTotal: Ref<number> = ref(0);
     const totalPrice = computed(() => {
       let total = 0;
       for (const key in props.cartData) {
@@ -77,9 +95,10 @@ export default {
     );
 
     // getting props data into another variable to perform some local operation
-    const carts = ref();
 
-    const cartData = computed(() => {
+    const carts: Ref<Cart[]> = ref([]);
+
+    const cartData: Ref<Cart[]> = computed(() => {
       return props.cartData;
     });
     watch(cartData, () => {
@@ -93,12 +112,17 @@ export default {
         store.dispatch("products/deleteCartItem", id);
         const index = carts.value.findIndex((data: any) => data.id === id);
         carts.value.splice(index, 1);
+        context.emit("itemDeleted", carts.value.length);
       } catch (e: any) {
         console.log("error");
       }
     }
-
-    return { subTotal, deleteItem, carts };
+    // to hide the Element
+    const show = ref(false);
+    setTimeout(() => {
+      show.value = true;
+    }, 1000);
+    return { subTotal, deleteItem, carts, show };
   },
 };
 </script>
@@ -107,14 +131,18 @@ export default {
 
 .cart-leave-from {
   opacity: 1;
+  transform: translateX(0);
 }
 .cart-leave-active {
   transition: all 0.35s ease-in;
+  position: absolute;
+  width: 100%;
 }
 .cart-leave-to {
   opacity: 0;
+  transform: translateX(200px);
 }
 .cart-move {
-  transition: all 5s ease;
+  transition: all 0.8s ease;
 }
 </style>
