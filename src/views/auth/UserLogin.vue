@@ -56,6 +56,7 @@ export default {
   components: { Form, Field },
   props: ["isLoading"],
   setup() {
+    // validation
     const schema = yup.object({
       email: yup.string().email().required("this field is required"),
       password: yup.string().required("this field is required").min(6),

@@ -43,7 +43,8 @@ export default {
     const isLogin = computed(() => {
       if (
         currentRoute.value.includes("login") ||
-        currentRoute.value.includes("registration")
+        currentRoute.value.includes("registration") ||
+        currentRoute.value.includes("/manage-profile")
       ) {
         return currentRoute.value;
       }

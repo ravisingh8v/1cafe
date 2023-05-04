@@ -20,15 +20,18 @@
     <div class="col-7 justify-content-center align-items-center d-flex">
       <div class="auth_right_section w-50">
         <!-- dynamic heading for login or registration page -->
-        <h1 class="text-center mb-5">
-          {{ !isRouteLogin ? "Register" : "login" }}
+        <h1 class="text-center mb-5" v-if="currentPage !== 'Manage Profile'">
+          {{ currentPage }}
         </h1>
+        <h1 class="text-center mb-5" v-else>Profile</h1>
         <!-- import slot -->
         <base-card>
           <!-- :isLoading="isLoading" -->
           <UserRegistration
             @submitForm="submitForm"
+            :isManageProfileRoute="isManageProfileRoute"
             v-if="!isRouteLogin"
+            :manageProfileData="manageProfileData"
           ></UserRegistration>
           <!-- :isLoading="isLoading" -->
           <UserLogin @submitForm="submitForm" v-else></UserLogin>
@@ -64,17 +67,6 @@ export default {
       return route.path;
     });
 
-    // watch(isLoading, () => {
-    //   isLoading.value = store.getters["isLoading"];
-    // });
-
-    // watch(
-    //   () => store.getters["auth/isLoading"],
-    //   () => {
-    //     isLoading.value = store.getters["auth/isLoading"];
-    //   }
-    // );
-
     // watch on change route to manipulate data according to registration and login
     watch(
       currentRoute,
@@ -105,47 +97,87 @@ export default {
      */
     async function submitForm(value: FormContext["values"]) {
       // click on login
-      console.log("work");
+      // console.log("work");
 
+      // on Login
       if (isRouteLogin.value) {
-        // on Login
         try {
           await store.dispatch("auth/userLogin", {
             email: value.email,
             password: value.password,
           });
           store.dispatch("auth/getUserData");
-          console.log("try");
+          // console.log("try");
         } catch (error) {
           catchError.value = error;
           return;
         }
         router.push("/");
-        console.log("this is login page bro");
       } else {
-        /**
-         * on registration
-         */
-        try {
-          await store.dispatch("auth/signUpWithEmailPassword", {
-            email: value.email,
-            password: value.password,
-          });
-        } catch (error) {
-          catchError.value = error;
-          return false;
+        // on registration sending this to admin dashboard
+        if (value.password) {
+          try {
+            await store.dispatch("auth/signUpWithEmailPassword", {
+              email: value.email,
+              password: value.password,
+            });
+          } catch (error) {
+            catchError.value = error;
+            return false;
+          }
+          router.push("/login");
         }
-        // if email not exists do this
+        // sending this to database
         await store.dispatch("auth/registration", {
-          // profileImage: value.profileImage,
           firstName: value.firstName,
           lastName: value.lastName,
           email: value.email,
-          // password: value.password,
         });
-        router.push("/login");
       }
     }
+
+    // Data for Patch
+    const manageProfileData = ref();
+
+    // Checking currentPage in manage profile ?
+    const isManageProfileRoute = ref(false);
+    watch(
+      () => route.path,
+      () => {
+        if (route.path.includes("/manage-profile")) {
+          isManageProfileRoute.value = true;
+          // if route is manage profile, getting active user data
+          const getActiveUserData = computed(() => {
+            return store.getters["auth/activeUser"];
+          });
+          watch(
+            getActiveUserData,
+            () => {
+              manageProfileData.value = getActiveUserData.value;
+              // console.log(manageProfileData);
+            },
+            { immediate: true }
+          );
+        } else {
+          isManageProfileRoute.value = false;
+          manageProfileData.value = "";
+        }
+      },
+      { immediate: true }
+    );
+
+    /**
+     * finding route to manipulate dom
+     */
+    const currentPage = computed(() => {
+      if (isRouteLogin.value) {
+        return "Login";
+      } else if (isManageProfileRoute.value) {
+        return "Manage Profile";
+      } else {
+        return "Register";
+      }
+    });
 
     // dialog
     function handleError() {
@@ -160,6 +192,9 @@ export default {
       // file,
       // uploadFile,
       submitForm,
+      isManageProfileRoute,
+      currentPage,
+      manageProfileData: manageProfileData,
     };
   },
 };
