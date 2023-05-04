@@ -10,7 +10,7 @@
       </div>
     </div>
     <!-- right section  -->
-    <div class="d-flex">
+    <div class="d-flex d-none">
       <!-- navigation  -->
       <nav class="navbar">
         <ul class="d-flex nav">
@@ -48,7 +48,10 @@
           class="profile_action_wrapper shadow border border-secondary position-absolute w-100 bg-dark"
         >
           <ul>
-            <li class="cp p-2 d-flex align-items-center">
+            <li
+              class="cp p-2 d-flex align-items-center"
+              @click="$router.push('/manage-profile'), (openMenu = false)"
+            >
               <span class="me-1 material-symbols-outlined"> person </span>
               <a>Profile</a>
             </li>

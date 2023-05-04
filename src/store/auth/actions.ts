@@ -10,24 +10,26 @@ export default {
      */
     async registration(context: any, payload: user) {
         context.commit('isLoading', true)
-        const userId = context.getters.userId
+        const userId = context.getters.userId || localStorage.getItem('userId');
         try {
-            axios.put(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}.json`, payload)
-            // const responseData = await response
-            // if (responseData) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            await axios.patch(`https://cafe-410be-default-rtdb.firebaseio.com/users/${userId}.json`, payload).then((res) => {
+                // console.log(res);
+            })
+            context.dispatch('getUserData')
             context.commit('isLoading', false)
             // }
         } catch (error) {
             context.commit('isLoading', false)
         }
-        // context.commit('registration', payload)
+
     },
 
     /**
      * Sign Up 
      * @param context 
      * @param payload 
-     */
+    */
     async signUpWithEmailPassword(context: any, payload: user) {
         context.commit('isLoading', true)
         try {
@@ -106,6 +108,7 @@ export default {
                 .then((response) => {
                     const responseData = response.data
                     context.commit('setUser', responseData)
+
                 })
         } catch (responseData: any) {
             const error = responseData

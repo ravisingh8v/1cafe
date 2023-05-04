@@ -46,6 +46,7 @@
             class="form-control"
             name="firstName"
             id="firstname"
+            v-model="firstName"
             placeholder="Firstname"
             :class="{ 'is-invalid': errors.firstName }"
           />
@@ -58,6 +59,7 @@
             class="form-control"
             name="lastName"
             id="lastname"
+            v-model="lastName"
             placeholder="Lastname"
             :class="{ 'is-invalid': errors.lastName }"
           />
@@ -67,7 +69,7 @@
     </div>
     <!-- end -->
     <!-- for login and registration similar fields  -->
-    <div class="mb-3">
+    <div class="mb-3" v-if="!isManageProfileRoute">
       <label for="email">Email </label>
       <Field
         id="email"
@@ -79,7 +81,7 @@
       />
       <span class="invalid-text text-danger">{{ errors.email }}</span>
     </div>
-    <div class="mb-4 mt-3">
+    <div class="mb-4 mt-3" v-if="!isManageProfileRoute">
       <label for="password">Password </label>
       <Field
         id="password"
@@ -104,7 +106,7 @@
               </div> -->
     </div>
     <!-- action -->
-    <span class="mx-2 mt-2">
+    <span class="mx-2 mt-2" v-if="!isManageProfileRoute">
       <span> If you don't have an account click here to </span>
       <RouterLink to="/login" class="text-primary">login</RouterLink>
     </span>
@@ -112,20 +114,48 @@
 </template>
 <script lang="ts">
 import * as yup from "yup";
+import { reactive, watch, ref, defineComponent } from "vue";
 import { Form, Field } from "vee-validate";
-export default {
-  props: ["isLoading"],
+export default defineComponent({
+  // props
+  props: ["isLoading", "isManageProfileRoute", "manageProfileData"],
+  // component
   components: { Form, Field },
-  setup() {
-    const schema = yup.object({
-      profileImage: yup.string(),
-      firstName: yup.string().required("this field is required"),
-      lastName: yup.string().required("this field is required"),
-      email: yup.string().email().required("this field is required"),
-      password: yup.string().required("this field is required").min(6),
-    });
 
-    return { schema };
+  setup(props: any) {
+    // validation
+    const schema = reactive({} as any);
+    if (!props.isManageProfileRoute) {
+      // for registration
+      schema.value = yup.object({
+        profileImage: yup.string(),
+        firstName: yup.string().required("this field is required"),
+        lastName: yup.string().required("this field is required"),
+        email: yup.string().email().required("this field is required"),
+        password: yup.string().required("this field is required").min(6),
+      });
+    } else {
+      // for manage profile
+      schema.value = yup.object({
+        firstName: yup.string().required("this field is required"),
+        lastName: yup.string().required("this field is required"),
+        email: yup.string(),
+      });
+    }
+    // Getting Data for patch
+    const firstName = ref("");
+    const lastName = ref("");
+    watch(
+      () => props.manageProfileData,
+      () => {
+        firstName.value = props.manageProfileData?.firstName || "";
+        lastName.value = props.manageProfileData?.lastName || "";
+        // console.log(props.manageProfileData);
+        schema.value.email = props.manageProfileData?.email || "";
+      },
+      { immediate: true }
+    );
+    return { schema: schema.value, firstName, lastName };
   },
-};
+});
 </script>

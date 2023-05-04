@@ -11,7 +11,7 @@
         <div>
           <a
             to="/"
-            class="pe-2 ps-1"
+            class="pe-2 ps-1 d-inline-block h-100"
             :class="
               isBakery
                 ? 'text-primary border-bottom border-3 border-primary'
@@ -22,26 +22,28 @@
           >
           <a
             to="/"
-            class="ps-2"
+            class="ps-2 d-inline-block h-100"
             @click="activeComponent('breakfast')"
             :class="
               !isBakery
-                ? 'text-primary border-bottom border-3 border-primary'
+                ? 'text-primary border-bottom border-3  border-primary'
                 : ''
             "
             >Breakfast</a
           >
         </div>
-        <div class="card_btn position-absolute end-0">
+        <div class="card_btn">
           <button
-            class="py-2 px-4 btn btn-secondary d-flex align-items-center"
+            class="py-1 px-4 btn btn-secondary d-flex align-items-center"
             @click="viewCart"
           >
             <span class="p-2 material-symbols-outlined me-2 position-relative">
-              shopping_cart<span
+              shopping_cart
+              <div
                 class="position-absolute top-0 end-0 cart_item_count rounded-circle bg-danger"
-                >{{ cartItems }}</span
-              > </span
+              >
+                {{ cartItems }}
+              </div> </span
             ><span class="me-2">View Cart</span>
           </button>
         </div>

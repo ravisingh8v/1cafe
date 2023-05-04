@@ -1,29 +1,15 @@
 <template>
-  <div class="row gx-0" v-for="feed in feedData" :key="feed.Head">
-    <div
-      class="col-6 items d-flex align-items-center justify-content-center"
-      :class="'order-' + feed.dataOrder"
-    >
-      <div class="w-50 d-flex flex-column">
-        <h2 class="mb-3">{{ feed.Head }}</h2>
-        <span class="mb-3 fs-5">{{ feed.Title }}</span>
-        <p class="mb-3 fw-light">
-          {{ feed.description }}
-        </p>
-        <div>
-          <router-link to="/order" class="btn btn-outline-secondary"
-            >See More</router-link
-          >
-        </div>
-      </div>
-    </div>
-    <div
-      class="col-6 items"
-      :class="[feed.imageTitle, 'order-' + feed.imgOrder]"
-    ></div>
+  <div>
+    <home-feed-item
+      v-for="feed in feedData"
+      :key="feed.Head"
+      :feed="feed"
+    ></home-feed-item>
   </div>
 </template>
 <script lang="ts">
+import HomeFeedItem from "./HomeFeedItem.vue";
+
 export default {
   data() {
     return {
@@ -49,5 +35,6 @@ export default {
       ],
     };
   },
+  components: { HomeFeedItem },
 };
 </script>

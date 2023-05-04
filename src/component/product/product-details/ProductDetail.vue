@@ -27,7 +27,7 @@
       </div>
       <div class="col-8 d-flex align-items-center justify-content-between">
         <button class="btn btn-primary px-4 flex-grow-1" @click="addToCart">
-          Add to cart
+          {{ isEdit ? "Edit" : "Add to cart" }}
         </button>
       </div>
     </div>
@@ -84,6 +84,11 @@ export default {
       }
     }
 
+    // if product details comes from cart details component
+    const isEdit = computed(() => {
+      return props.productDetail.id.length > 5;
+    });
+
     /**
      * Add To Cart Product
      */
@@ -109,7 +114,7 @@ export default {
         quantity.value = props.productDetail.quantity;
       }
     });
-    return { quantity, price, addQuantity, removeQuantity, addToCart };
+    return { quantity, price, addQuantity, removeQuantity, addToCart, isEdit };
   },
 };
 </script>
