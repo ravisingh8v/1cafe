@@ -1,6 +1,6 @@
 <template>
-  <!-- footer section -->
   <footer class="footer_wrapper d-flex flex-column">
+    <!-- footer section -->
     <div
       class="bg-dark text-white flex-grow-1 row gx-0 gap-5 justify-content-center"
     >
