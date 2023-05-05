@@ -2,12 +2,15 @@
   <section class="d-flex flex-column h-100">
     <base-spinner v-if="isLoading"></base-spinner>
     <!-- Header  -->
-    <the-header
-      :isLogin="isLogin"
-      :isAuthenticated="isAuthenticated"
-      :menu="menu"
-      @openMenu="openMenu"
-    ></the-header>
+    <transition name="route">
+      <the-header
+        :isLogin="isLogin"
+        :isAuthenticated="isAuthenticated"
+        :menu="menu"
+        @openMenu="openMenu"
+        v-if="!isNotFound"
+      ></the-header>
+    </transition>
     <!-- Router components -->
     <section class="flex-grow-1" @click="menuFn">
       <router-view v-slot="slotProps">
@@ -16,7 +19,9 @@
         </transition>
       </router-view>
     </section>
-    <the-footer v-if="!isLogin && footer"></the-footer>
+    <transition name="route">
+      <the-footer v-if="!isLogin && footer && !isNotFound"></the-footer>
+    </transition>
   </section>
 </template>
 <script lang="ts">
@@ -34,12 +39,18 @@ export default {
     const isAuthenticated = ref();
     // getting current route to hide footer on login page
     const currentRoute = ref("");
-    watch(
-      () => route.path,
-      () => {
-        currentRoute.value = route.path;
+    const isNotFound = ref();
+    const checkCurrentRoute = computed(() => {
+      return route.path;
+    });
+    watch(checkCurrentRoute, async () => {
+      currentRoute.value = checkCurrentRoute?.value;
+      if (route.matched[0]["path"] === "/:notFound(.*)*") {
+        isNotFound.value = true;
+      } else {
+        isNotFound.value = false;
       }
-    );
+    });
     const isLogin = computed(() => {
       if (
         currentRoute.value.includes("login") ||
@@ -89,6 +100,7 @@ export default {
     function menuFn() {
       menu.value = false;
     }
+
     // end
     store.dispatch("auth/isAuth");
     store.dispatch("auth/getUserData");
@@ -108,6 +120,7 @@ export default {
       menuFn,
       openMenu,
       isLoading,
+      isNotFound,
     };
   },
 };

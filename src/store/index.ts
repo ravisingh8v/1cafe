@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 // Importing External Modules 
 import auth from './auth'
 import products from './products'
+import contact from './contact'
 
 export default createStore({
   state: {
@@ -22,6 +23,7 @@ export default createStore({
   },
   modules: {
     auth: auth,
-    products: products
+    products: products,
+    contact: contact
   }
 })

@@ -10,7 +10,7 @@
       </div>
     </div>
     <!-- right section  -->
-    <div class="d-flex d-none">
+    <div class="d-flex">
       <!-- navigation  -->
       <nav class="navbar">
         <ul class="d-flex nav">

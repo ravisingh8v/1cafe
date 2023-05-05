@@ -18,12 +18,13 @@ const routes: Array<RouteRecordRaw> = [
   //   // which is lazy-loaded when the route is visited.
   //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   // },
-  { path: '/contact', component: HomeView, meta: { requireAuth: true } },
-  { path: '/about', component: () => import('../component/home/HomeFeed/HomeFeed.vue') },
+  { path: '/contact', component: () => import('../views/ContactView.vue'), meta: { requireAuth: true } },
+  { path: '/about', component: () => import('../views/AboutView.vue') },
   { path: '/order', component: () => import('../views/OrderView.vue'), meta: { requireAuth: true } },
   { path: '/login', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },
   { path: '/registration', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },
-  { path: '/manage-profile', component: () => import('../views/auth/BaseAuthView.vue') }
+  { path: '/manage-profile', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: true } },
+  { path: '/:notFound(.*)*', component: () => import('../views/PageNotFound.vue') }
 
 ]
 
