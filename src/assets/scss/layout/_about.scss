@@ -1,0 +1,10 @@
+.about_feed_wrapper {
+  height: 550px;
+  .about-image {
+    background-image: url("@/assets/images/mainSection/about-feed-3.jpg");
+    @extend %bg-image-properties;
+  }
+  .row {
+    height: inherit;
+  }
+}

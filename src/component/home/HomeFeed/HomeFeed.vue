@@ -1,14 +1,14 @@
 <template>
   <div>
-    <home-feed-item
+    <base-feed-item
       v-for="feed in feedData"
       :key="feed.Head"
       :feed="feed"
-    ></home-feed-item>
+    ></base-feed-item>
   </div>
 </template>
 <script lang="ts">
-import HomeFeedItem from "./HomeFeedItem.vue";
+import BaseFeedItem from "./../../../ui/BaseFeedItem.vue";
 
 export default {
   data() {
@@ -20,8 +20,8 @@ export default {
           description:
             " I'm a paragraph. here we can write about our Product and Details of our product this is dummy text here.",
           imageTitle: "food",
-          imgOrder: "2",
-          dataOrder: "1",
+          // imgOrder: "2",
+          dataOrder: "negative",
         },
         {
           Head: "Drink.",
@@ -29,12 +29,12 @@ export default {
           description:
             "  I'm a paragraph. here we can write about our Product and Details of our product this is dummy text here.",
           imageTitle: "drink",
-          imgOrder: "1",
-          dataOrder: "2",
+          // imgOrder: "1",
+          dataOrder: "positive",
         },
       ],
     };
   },
-  components: { HomeFeedItem },
+  components: { BaseFeedItem },
 };
 </script>

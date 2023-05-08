@@ -6,10 +6,10 @@ export default {
 
         console.log(context.rootState);
 
-        const userId = localStorage.getItem('userId')
-        const activeUser = context.rootGetters['auth/activeUser']
+        const userId = localStorage.getItem('userId') || 'Not a logged in User'
+        // const activeUser = context.rootGetters['auth/activeUser']
 
-        await axios.post(`${process.env.VUE_APP_BASE_URL}contact-us.json`, { userId: userId, firstName: activeUser.firstName, lastName: activeUser.lastName, email: activeUser.email, message: payload.message, time: payload.time, day: payload.day }).then((res) => {
+        await axios.post(`${process.env.VUE_APP_BASE_URL}contact-us.json`, { userId: userId, firstName: payload.firstName, lastName: payload.lastName, email: payload.email, message: payload.message, time: payload.time, day: payload.day }).then((res) => {
             console.log(res);
 
             context.rootState.auth.isLoading = false

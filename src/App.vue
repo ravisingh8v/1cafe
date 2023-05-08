@@ -100,8 +100,8 @@ export default {
     function menuFn() {
       menu.value = false;
     }
-
     // end
+
     store.dispatch("auth/isAuth");
     store.dispatch("auth/getUserData");
     const isLoading = ref();
