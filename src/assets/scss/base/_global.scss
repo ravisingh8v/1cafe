@@ -4,9 +4,9 @@ body {
   height: 100%;
   width: 100%;
 }
-body {
-  // overflow: hidden;
-}
+// body {
+//   overflow: hidden;
+// }
 
 #app {
   height: inherit;
@@ -32,4 +32,13 @@ body {
 }
 .positive-order {
   order: 1;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+  .app_wrapper {
+    overflow: auto;
+  }
 }
