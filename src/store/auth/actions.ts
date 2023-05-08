@@ -127,6 +127,7 @@ export default {
     logout(context: any) {
         localStorage.removeItem('token')
         localStorage.removeItem('userId')
+        context.commit('setUser', '')
         context.commit('setAuthentication', false)
     }
 }

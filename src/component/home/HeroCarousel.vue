@@ -1,6 +1,6 @@
 <template>
   <div
-    class="hero_carousel bg-secondary position-relative d-flex justify-content-center text-white"
+    class="cp hero_carousel bg-secondary position-relative d-flex justify-content-center text-white"
     :class="navigateTo"
   >
     <!-- transition the items  -->

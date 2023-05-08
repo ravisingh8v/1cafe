@@ -29,8 +29,14 @@
         </ul>
       </nav>
       <!-- profile  -->
-      <div class="ms-3 d-flex align-items-center position-relative">
-        <div class="user_wrapper d-flex align-items-center">
+      <div
+        class="d-flex align-items-center position-relative"
+        :class="{ 'ms-3': !isAuthenticated }"
+      >
+        <div
+          class="user_wrapper d-flex align-items-center"
+          :class="{ 'min-w-100': isAuthenticated }"
+        >
           <div
             class="cp user_profile_wrapper d-flex align-items-center justify-content-center"
             @click="openProfileMenu"
@@ -61,16 +67,21 @@
             </li>
           </ul>
         </div>
-
+        <!-- login and registration link  -->
         <div v-if="!isAuthenticated">
-          <div class="ms-2" v-if="isLogin !== '/login'">
-            <RouterLink class="btn btn-primary" to="/login">Log in</RouterLink>
+          <!-- v-if="isLogin !== '/login'" -->
+          <div class>
+            <RouterLink
+              class="btn btn-primary"
+              :to="isLogin !== '/login' ? '/login' : '/registration'"
+              >{{ isLogin !== "/login" ? "Login" : "Registration" }}</RouterLink
+            >
           </div>
-          <div class="ms-2" v-else>
+          <!-- <div class="ms-2" v-else>
             <RouterLink class="btn btn-primary" to="/registration">
               Registration
             </RouterLink>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -114,6 +125,7 @@ export default {
     function logout() {
       store.dispatch("auth/logout");
       openMenu.value = false;
+      user.value = "";
       router.push("/login");
     }
 
