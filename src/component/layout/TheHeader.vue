@@ -10,7 +10,12 @@
       </div>
     </div>
     <!-- right section  -->
-    <div class="d-flex">
+
+    <div
+      class="d-flex mobile_navigation"
+      @click="openMenu = false"
+      :class="[navbar]"
+    >
       <!-- navigation  -->
       <nav class="navbar">
         <ul class="d-flex nav">
@@ -30,8 +35,9 @@
       </nav>
       <!-- profile  -->
       <div
-        class="d-flex align-items-center position-relative"
+        class="profile_action d-flex align-items-center position-relative"
         :class="{ 'ms-3': !isAuthenticated }"
+        @click.stop
       >
         <div
           class="user_wrapper d-flex align-items-center"
@@ -84,7 +90,13 @@
           </div> -->
         </div>
       </div>
+      <div class="close_mobile_navigation">
+        <span class="fs-1 material-symbols-outlined" @click="navbar = 'hide'">
+          close
+        </span>
+      </div>
     </div>
+    <!-- <div class="hamburger_icon">=</div> -->
   </header>
 </template>
 
@@ -128,8 +140,15 @@ export default {
       user.value = "";
       router.push("/login");
     }
-
-    return { store, openMenu, openProfileMenu, user, logout };
+    const navbar = ref("hide");
+    return {
+      store,
+      openMenu,
+      openProfileMenu,
+      user,
+      navbar,
+      logout,
+    };
   },
 };
 </script>

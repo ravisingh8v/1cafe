@@ -1,5 +1,5 @@
 <template>
-  <section class="d-flex flex-column h-100">
+  <section class="d-flex flex-column h-100 app_wrapper">
     <base-spinner v-if="isLoading"></base-spinner>
     <!-- Header  -->
     <transition name="route">
