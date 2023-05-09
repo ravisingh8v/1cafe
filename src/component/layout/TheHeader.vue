@@ -10,15 +10,22 @@
       </div>
     </div>
     <!-- right section  -->
-
+    <input
+      type="checkbox"
+      name=""
+      class="d-none"
+      id="toggleNav"
+      :checked="isChecked"
+    />
     <div
-      class="d-flex mobile_navigation"
+      class="mobile_navigation"
+      ref="mobileNavigation"
       @click="openMenu = false"
-      :class="[navbar]"
     >
       <!-- navigation  -->
       <nav class="navbar">
-        <ul class="d-flex nav">
+        <ul class="d-flex nav" @click="isChecked = false">
+          <!-- @click="closeNav" -->
           <li class="nav-item">
             <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
@@ -59,7 +66,8 @@
           v-if="openMenu && isAuthenticated"
           class="profile_action_wrapper shadow border border-secondary position-absolute w-100 bg-dark"
         >
-          <ul>
+          <ul @click="isChecked = false">
+            <!-- @click="closeNav" -->
             <li
               class="cp p-2 d-flex align-items-center"
               @click="$router.push('/manage-profile'), (openMenu = false)"
@@ -76,7 +84,7 @@
         <!-- login and registration link  -->
         <div v-if="!isAuthenticated">
           <!-- v-if="isLogin !== '/login'" -->
-          <div class>
+          <div @click="isChecked = false">
             <RouterLink
               class="btn btn-primary"
               :to="isLogin !== '/login' ? '/login' : '/registration'"
@@ -90,18 +98,27 @@
           </div> -->
         </div>
       </div>
-      <div class="close_mobile_navigation">
-        <span class="fs-1 material-symbols-outlined" @click="navbar = 'hide'">
-          close
-        </span>
-      </div>
+      <!-- close icon  -->
+      <label @click="closeNav" class="close_mobile_navigation">
+        <!-- @click="closeNav" -->
+        <span class="fs-1 material-symbols-outlined"> close </span>
+      </label>
     </div>
-    <!-- <div class="hamburger_icon">=</div> -->
+    <!-- hamburger icon  -->
+    <label
+      class="hamburger_icon fs-1 material-symbols-outlined"
+      ref="hamburgerIcon"
+      @click="openNav"
+    >
+      <!-- @click="openNav" -->
+      menu
+    </label>
   </header>
 </template>
 
 <!-- script -->
 <script lang="ts">
+import "./../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
 import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
@@ -133,6 +150,7 @@ export default {
     watch(activeUser, () => {
       user.value = activeUser.value.firstName + " " + activeUser.value.lastName;
     });
+
     // user.value = activeUser.value;
     function logout() {
       store.dispatch("auth/logout");
@@ -140,14 +158,25 @@ export default {
       user.value = "";
       router.push("/login");
     }
-    const navbar = ref("hide");
+
+    // for mobile navigation
+    const isChecked = ref<any>(false);
+    function closeNav() {
+      isChecked.value = false;
+    }
+    function openNav() {
+      isChecked.value = true;
+    }
     return {
       store,
       openMenu,
       openProfileMenu,
       user,
-      navbar,
       logout,
+      openNav,
+      isChecked,
+      closeNav,
+      // hamburgerIcon,
     };
   },
 };

@@ -5,6 +5,9 @@
   background-attachment: fixed;
   // border: 2px solid red;
   height: 700px;
+  @media (max-width: 576px) {
+    background-attachment: unset;
+  }
 
   .hero_overlay {
     position: absolute;
@@ -18,5 +21,40 @@
   }
   .hero_content {
     z-index: 10;
+    & > span {
+      font-size: 28px;
+      @media (max-width: 768px) {
+        font-size: 18px;
+      }
+      @media (max-width: 576px) {
+        font-size: 12px;
+      }
+      @media (max-width: 350px) {
+        font-size: 8px;
+      }
+    }
+    @media (max-width: 576px) {
+      padding: 0 !important;
+    }
+  }
+
+  h2 {
+    @media (max-width: 768px) {
+      font-size: 40px;
+    }
+    @media (max-width: 576px) {
+      font-size: 28px;
+    }
+    @media (max-width: 350px) {
+      font-size: 22px;
+    }
+  }
+  @media (max-width: 576px) {
+    height: 500px;
+  }
+  .order-button {
+    @media (max-width: 350px) {
+      padding: 10px !important;
+    }
   }
 }

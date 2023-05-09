@@ -93,7 +93,7 @@
       />
       <span class="invalid-text text-danger">{{ errors.password }}</span>
     </div>
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column mb-2">
       <!-- submit button  -->
       <div>
         <button class="btn btn-primary">
@@ -106,8 +106,8 @@
               </div> -->
     </div>
     <!-- action -->
-    <span class="mx-2 mt-2" v-if="!isManageProfileRoute">
-      <span> If you don't have an account click here to </span>
+    <span class="mt-2" v-if="!isManageProfileRoute">
+      <span>If you don't have an account click here to </span>
       <RouterLink to="/login" class="text-primary">login</RouterLink>
     </span>
   </Form>

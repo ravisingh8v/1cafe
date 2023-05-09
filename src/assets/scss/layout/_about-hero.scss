@@ -9,4 +9,17 @@
     height: inherit;
     z-index: 1;
   }
+  @media (max-width: 576px) {
+    .hero_data {
+      width: 80%;
+    }
+    background-attachment: unset;
+    h2 {
+      font-size: 40px;
+    }
+    h3 {
+      font-size: 15px !important;
+      font-weight: 400 !important;
+    }
+  }
 }

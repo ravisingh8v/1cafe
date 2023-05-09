@@ -19,6 +19,7 @@
                   name="firstName"
                   id="firstName"
                   class="form-control"
+                  placeholder="e.g. ravi"
                   v-model="activeUser.firstName"
                   :class="{ 'is-invalid': errors.firstName }"
                 />
@@ -35,6 +36,7 @@
                   name="lastName"
                   id="lastName"
                   class="form-control"
+                  placeholder="e.g. singh"
                   v-model="activeUser.lastName"
                   :class="{ 'is-invalid': errors.lastName }"
                 />
@@ -50,6 +52,7 @@
                 name="email"
                 id="email"
                 class="form-control"
+                placeholder="e.g. test@gmail.com"
                 :class="{ 'is-invalid': errors.email }"
                 v-model="activeUser.email"
               />
@@ -68,7 +71,7 @@
                 class="form-control"
                 cols="30"
                 rows="5"
-                placeholder="Enter your message"
+                placeholder="Enter your message here"
                 :class="{ 'is-invalid': errors.message }"
               ></Field>
               <span class="invalid-text text-danger" v-if="errors.message">{{

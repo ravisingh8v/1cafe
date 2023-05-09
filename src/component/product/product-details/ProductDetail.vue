@@ -1,5 +1,5 @@
 <template>
-  <div class="card shadow p-4 w-50" @click.stop>
+  <div class="details_wrapper card shadow p-4" @click.stop>
     <div class="product_image_wrapper product_details rounded">
       <img :src="productDetail.imageUrl" alt="" />
     </div>
@@ -10,22 +10,34 @@
       <div class="me-2">Total Price : ${{ price }}</div>
     </div>
     <div class="my-2 row">
-      <div class="col-4 d-flex">
-        <form action="" class="me-1">
-          <input type="number" class="form-control me-3" v-model="quantity" />
-        </form>
-        <div class="me-1">
-          <button class="btn btn-secondary" @click="removeQuantity">
-            <span>-</span>
-          </button>
-        </div>
-        <div class="">
-          <button class="btn btn-secondary" @click="addQuantity">
-            <span>+</span>
-          </button>
+      <div class="col-sm-4 col-12 d-flex">
+        <div class="row gx-0">
+          <div class="col-6">
+            <form action="" class="me-1">
+              <input
+                type="number"
+                class="form-control me-3"
+                v-model="quantity"
+              />
+            </form>
+          </div>
+          <div class="col-6 d-flex">
+            <div class="me-1">
+              <button class="btn btn-secondary" @click="removeQuantity">
+                <span>-</span>
+              </button>
+            </div>
+            <div class="">
+              <button class="btn btn-secondary" @click="addQuantity">
+                <span>+</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col-8 d-flex align-items-center justify-content-between">
+      <div
+        class="col-sm-8 col-12 mt-3 mt-sm-0 d-flex align-items-center justify-content-between"
+      >
         <button class="btn btn-primary px-4 flex-grow-1" @click="addToCart">
           {{ isEdit ? "Edit" : "Add to cart" }}
         </button>
