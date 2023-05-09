@@ -1,6 +1,9 @@
 .home_main_wrapper {
   .items {
     height: 550px;
+    @media (max-width: 576px) {
+      height: 450px;
+    }
   }
   .food {
     background-image: url("@/assets/images/mainSection/food.webp");
@@ -9,5 +12,12 @@
   .drink {
     background-image: url("@/assets/images/mainSection/drink.webp");
     @extend %bg-image-properties;
+  }
+  .feed_data {
+    width: 50%;
+    @media (max-width: 576px) {
+      padding: 20px;
+      width: 100%;
+    }
   }
 }

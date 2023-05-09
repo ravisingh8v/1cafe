@@ -4,6 +4,17 @@
     background-image: url("@/assets/images/mainSection/about-feed-3.jpg");
     @extend %bg-image-properties;
   }
+
+  .feed_data {
+    width: 50%;
+    @media (max-width: 768px) {
+      width: 80%;
+    }
+    @media (max-width: 576px) {
+      padding: 20px;
+      width: 100%;
+    }
+  }
   .row {
     height: inherit;
   }

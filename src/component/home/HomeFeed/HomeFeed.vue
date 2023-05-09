@@ -21,7 +21,7 @@ export default {
             " I'm a paragraph. here we can write about our Product and Details of our product this is dummy text here.",
           imageTitle: "food",
           // imgOrder: "2",
-          dataOrder: "negative",
+          dataOrder: "",
         },
         {
           Head: "Drink.",
@@ -30,7 +30,7 @@ export default {
             "  I'm a paragraph. here we can write about our Product and Details of our product this is dummy text here.",
           imageTitle: "drink",
           // imgOrder: "1",
-          dataOrder: "positive",
+          dataOrder: "1",
         },
       ],
     };

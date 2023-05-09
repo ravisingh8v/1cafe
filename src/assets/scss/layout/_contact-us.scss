@@ -6,4 +6,9 @@
   @media (min-width: 992px) {
     width: 50%;
   }
+  h1 {
+    @media (max-width: 576px) {
+      font-size: 40px;
+    }
+  }
 }

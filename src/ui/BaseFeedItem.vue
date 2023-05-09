@@ -1,10 +1,10 @@
 <template>
   <div class="row gx-0">
     <div
-      class="col-6 items d-flex align-items-center justify-content-center"
-      :class="feed.dataOrder + '-order'"
+      class="col-sm-6 col-12 items d-flex align-items-center order-0 justify-content-center"
+      :class="'order-sm-' + feed.dataOrder"
     >
-      <div class="w-50 d-flex flex-column">
+      <div class="feed_data d-flex flex-column">
         <h2 class="mb-3" v-if="feed.head">{{ feed.Head }}</h2>
         <span class="mb-3 fs-5" v-if="feed.head">{{ feed.Title }}</span>
         <h2 class="mb-3 fs-1" v-else>{{ feed.Title }}</h2>
@@ -18,7 +18,10 @@
         </div>
       </div>
     </div>
-    <div class="col-6 items" :class="[feed.imageTitle]"></div>
+    <div
+      class="col-sm-6 col-12 items order-sm-0 order-1"
+      :class="[feed.imageTitle]"
+    ></div>
   </div>
 </template>
 <script lang="ts">

@@ -18,4 +18,7 @@
   }
   overflow: hidden;
   user-select: none;
+  @media (max-width: 360px) {
+    font-size: 10px;
+  }
 }

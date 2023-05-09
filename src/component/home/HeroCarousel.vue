@@ -6,15 +6,15 @@
     <!-- transition the items  -->
     <Transition mode="out-in" name="carousel">
       <div
-        class="p-3 item_1 w-100 d-flex justify-content-center"
+        class="p-sm-3 p-2 item_1 w-100 d-flex justify-content-center"
         v-if="firstSlide"
       >
         <div class="">
-          Daily Deal <span class="mx-3">|</span> Coffee & Pastry $3.99
+          Daily Deal <span class="mx-sm-3 mx-1">|</span> Coffee & Pastry $3.99
         </div>
       </div>
       <div
-        class="p-3 item_2 w-100 d-flex justify-content-center"
+        class="p-sm-3 p-2 item_2 w-100 d-flex justify-content-center"
         v-else-if="secondSlide"
       >
         Weekend Brunch <span class="mx-3">|</span> Saturday 9am - 2pm

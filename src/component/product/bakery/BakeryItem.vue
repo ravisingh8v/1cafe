@@ -1,5 +1,5 @@
 <template>
-  <div class="col-4">
+  <div class="col-lg-4 col-sm-6 col-12">
     <div
       class="border product_card shadow card p-3"
       @click="$emit('getDetails', bakery)"

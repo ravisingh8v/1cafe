@@ -27,13 +27,6 @@ body {
   font-family: $font-family-cursive;
 }
 
-.negative-order {
-  order: -1;
-}
-.positive-order {
-  order: 1;
-}
-
 @media (max-width: 768px) {
   body {
     overflow: hidden;

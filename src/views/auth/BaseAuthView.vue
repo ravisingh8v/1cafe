@@ -9,7 +9,7 @@
       <p>{{ catchError }}</p>
     </base-dialog>
     <!-- left section  -->
-    <div class="col-5">
+    <div class="col-sm-5 d-sm-block d-none">
       <!-- for background image  -->
       <div
         class="h-100 auth_left_section"
@@ -17,8 +17,10 @@
       ></div>
     </div>
     <!-- right section  -->
-    <div class="col-7 justify-content-center align-items-center d-flex">
-      <div class="auth_right_section w-50">
+    <div
+      class="col-sm-7 col-12 justify-content-center align-items-center d-flex"
+    >
+      <div class="auth_right_section">
         <!-- dynamic heading for login or registration page -->
         <h1 class="text-center mb-5" v-if="currentPage !== 'Manage Profile'">
           {{ currentPage }}
