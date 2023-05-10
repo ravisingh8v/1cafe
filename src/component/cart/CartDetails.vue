@@ -12,7 +12,7 @@
         >
           <h3 class="fs-2">My Orders</h3>
           <span
-            class="cp close_button material-symbols-outlined"
+            class="cp close_button material-symbols-outlined icon"
             @click="$emit('close')"
             >close</span
           >

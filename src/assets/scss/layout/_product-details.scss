@@ -19,10 +19,41 @@ input::-webkit-inner-spin-button {
   @media (max-width: 992px) {
     width: 75%;
   }
+  @media (max-width: 768px) {
+    h3 {
+      white-space: nowrap;
+      font-size: 50px;
+    }
+  }
   @media (max-width: 576px) {
     width: 85%;
     h3 {
       font-size: 40px;
+    }
+    h3 {
+      font-size: 40px;
+    }
+  }
+  @media (max-width: 390px) {
+    h3 {
+      font-size: 30px;
+    }
+  }
+  .primary_close_btn {
+    top: -10px;
+    right: -10px;
+    color: $light;
+    background-color: $gray;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.35s ease-in-out;
+    &:hover {
+      color: $light;
+      background-color: $danger;
     }
   }
 }

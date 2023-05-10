@@ -75,6 +75,7 @@
         <product-detail
           v-if="productDetail"
           :productDetail="productDetail"
+          @closeModel="closeModel"
           @cartAdded="cartAdded"
         ></product-detail>
         <CartDetails
@@ -182,7 +183,9 @@ export default defineComponent({
     function itemDeleted(value: number) {
       cartItems.value = value;
     }
-
+    function closeModel() {
+      productDetail.value = "";
+    }
     // provide this to bakery and breakfast component
     provide("allBakeryProduct", allBakeryProduct);
     provide("allBreakfastProduct", allBreakfastProduct);
@@ -205,6 +208,7 @@ export default defineComponent({
       cartItems,
       itemDeleted,
       editCartItem,
+      closeModel,
     };
   },
 });

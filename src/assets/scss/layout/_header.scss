@@ -1,5 +1,12 @@
 .main_header {
   z-index: 10000;
+  .primary_close_btn {
+    color: $light;
+    transition: all 0.35s ease-in-out;
+    &:hover {
+      color: $danger;
+    }
+  }
 }
 // nav style
 .nav-link {
