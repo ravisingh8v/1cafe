@@ -45,6 +45,8 @@ export default {
     });
     watch(checkCurrentRoute, async () => {
       currentRoute.value = checkCurrentRoute?.value;
+      console.log(route.matched);
+
       if (route.matched[0]["path"] === "/:notFound(.*)*") {
         isNotFound.value = true;
       } else {
