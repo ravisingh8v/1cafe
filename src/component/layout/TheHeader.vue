@@ -57,7 +57,7 @@
           >
             <span class="material-symbols-outlined"> account_circle </span>
           </div>
-          <div class="ms-2" v-if="isAuthenticated" @click="openProfileMenu">
+          <div class="ms-2" @click="openProfileMenu">
             <a>{{ user }}</a>
           </div>
         </div>
@@ -145,11 +145,22 @@ export default {
     // getting user
     const user = ref();
     const activeUser = computed(() => {
-      return store.getters["auth/activeUser"];
+      return store.getters?.["auth/activeUser"] || " ";
     });
-    watch(activeUser, () => {
-      user.value = activeUser.value.firstName + " " + activeUser.value.lastName;
-    });
+
+    watch(
+      activeUser,
+      () => {
+        console.log(user);
+        if (activeUser.value?.["firstName" || "lastName"]) {
+          user.value =
+            activeUser.value?.firstName + " " + activeUser.value?.lastName;
+        } else {
+          user.value = "";
+        }
+      },
+      { immediate: true }
+    );
 
     // user.value = activeUser.value;
     function logout() {
