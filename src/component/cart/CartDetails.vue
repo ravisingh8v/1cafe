@@ -18,13 +18,18 @@
           >
         </div>
         <!-- items  -->
-        <TransitionGroup
+        <transition-group
           tag="div"
           mode="out-in"
           class="mt-4 position-relative px-4 overflow-hidden"
           name="cart"
         >
           <!-- cart 1 -->
+          <!-- <div v-if="carts"> -->
+          <!-- no Data found -->
+          <div v-if="noDataFound && show" class="text-center">
+            No Item Found
+          </div>
           <CartDetailsItem
             v-for="cart in carts"
             :key="cart.id.toString()"
@@ -32,6 +37,7 @@
             @deleteItem="deleteItem"
             @editItem="$emit('editItem', $event)"
           ></CartDetailsItem>
+          <!-- </div> -->
           <!-- break line  -->
           <div
             v-if="show && carts"
@@ -41,7 +47,7 @@
 
           <!-- subtotal -->
           <div
-            v-if="show && carts"
+            v-if="show && carts && !noDataFound"
             :key="'subTotal'"
             class="d-flex justify-content-between px-4 p-2"
           >
@@ -50,7 +56,7 @@
           </div>
           <!-- div to help in transition smoother  -->
           <div class="py-5" key="space"></div>
-        </TransitionGroup>
+        </transition-group>
       </div>
       <!-- bottom  -->
       <!-- checkout -->
@@ -106,6 +112,30 @@ export default {
     });
 
     // calling method delete cart item
+    const noDataFounds = computed(() => {
+      console.log(carts.value.length);
+      if (carts.value.length == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    const noDataFound = ref(false);
+    watch(
+      noDataFounds,
+      () => {
+        noDataFound.value = noDataFounds.value;
+      },
+      { immediate: true }
+    );
+    // function checkCartData(value: Cart[]) {
+    //   console.log(value);
+
+    //   value.length == 0
+    //     ? (noDataFound.value = true)
+    //     : (noDataFound.value = false);
+    // }
+    // checkCartData(carts.value);
 
     async function deleteItem(id: number) {
       try {
@@ -113,6 +143,7 @@ export default {
         const index = carts.value.findIndex((data: any) => data.id === id);
         carts.value.splice(index, 1);
         context.emit("itemDeleted", carts.value.length);
+        // checkCartData(carts.value);
       } catch (e: any) {
         console.log("error");
       }
@@ -122,16 +153,25 @@ export default {
     setTimeout(() => {
       show.value = true;
     }, 1000);
-    return { subTotal, deleteItem, carts, show };
+    return { subTotal, deleteItem, carts, show, noDataFound };
   },
 };
 </script>
 <style lang="scss" scoped>
 // cart animation
-
+.cart-enter-from {
+  transform: translateX(-200px);
+  opacity: 0;
+}
+.cart-enter-to {
+  opacity: 1;
+}
 .cart-leave-from {
   opacity: 1;
   transform: translateX(0);
+}
+.cart-enter-active {
+  transition: all 0.35s ease-out;
 }
 .cart-leave-active {
   transition: all 0.35s ease-in;
