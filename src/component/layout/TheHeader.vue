@@ -101,7 +101,9 @@
       <!-- close icon  -->
       <label @click="closeNav" class="close_mobile_navigation">
         <!-- @click="closeNav" -->
-        <span class="fs-1 material-symbols-outlined"> close </span>
+        <span class="fs-1 primary_close_btn icon material-symbols-outlined">
+          close
+        </span>
       </label>
     </div>
     <!-- hamburger icon  -->

@@ -1,5 +1,5 @@
 <template>
-  <div class="details_wrapper card shadow p-4" @click.stop>
+  <div class="details_wrapper card shadow p-4 position-relative" @click.stop>
     <div class="product_image_wrapper product_details rounded">
       <img :src="productDetail.imageUrl" alt="" />
     </div>
@@ -43,6 +43,12 @@
         </button>
       </div>
     </div>
+    <!-- close button  -->
+    <div class="position-absolute primary_close_btn">
+      <span class="material-symbols-outlined icon" @click="closeModel">
+        close
+      </span>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -51,7 +57,7 @@ import { onMounted } from "vue";
 import { ref, watch, computed } from "vue";
 export default {
   props: ["productDetail"],
-  emits: ["cartAdded"],
+  emits: ["cartAdded", "closeModel"],
   setup(props: any, context: any) {
     const store = useStore();
     const quantity = ref();
@@ -65,7 +71,7 @@ export default {
         } else if (quantity.value <= 1) {
           quantity.value = 1;
         }
-        console.log(quantity.value);
+        // console.log(quantity.value);
       },
       { immediate: true }
     );
@@ -126,7 +132,18 @@ export default {
         quantity.value = props.productDetail.quantity;
       }
     });
-    return { quantity, price, addQuantity, removeQuantity, addToCart, isEdit };
+    function closeModel() {
+      context.emit("closeModel");
+    }
+    return {
+      quantity,
+      price,
+      addQuantity,
+      removeQuantity,
+      addToCart,
+      isEdit,
+      closeModel,
+    };
   },
 };
 </script>

@@ -18,6 +18,10 @@ a {
 label {
   cursor: pointer;
 }
+.icon {
+  cursor: pointer;
+  user-select: none;
+}
 
 // btn resets
 .btn-outline-secondary {
