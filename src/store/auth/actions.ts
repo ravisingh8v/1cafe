@@ -38,7 +38,6 @@ export default {
             const responseData = await response.data
             context.commit('isLoading', false)
             context.commit('setUserId', responseData.localId)
-            console.log(responseData);
 
         } catch (error: any) {
             context.commit('isLoading', false)

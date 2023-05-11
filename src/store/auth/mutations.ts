@@ -15,4 +15,7 @@ export default {
     isLoading(state: any, payload: any) {
         state.isLoading = payload;
     },
+    getToken(state: any, payload: any) {
+        state.token = payload
+    }
 }

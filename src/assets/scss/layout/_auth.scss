@@ -1,12 +1,12 @@
 .login_bg {
-  background-image: url("@/assets/images/login_registration/auth_bg_image.avif");
+  background-image: url("@/assets/images/login_registration/login_bg_image.avif");
   //   background-size: cover;
   //   background-repeat: no-repeat;
   //   background-position: center;
   @extend %bg-image-properties;
 }
 .register_bg {
-  background-image: url("@/assets/images/login_registration/auth_bg-image.avif");
+  background-image: url("@/assets/images/login_registration/register_bg_image.avif");
   @extend %bg-image-properties;
 }
 // .auth_right_section {

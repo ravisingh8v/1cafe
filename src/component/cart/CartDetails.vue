@@ -113,7 +113,7 @@ export default {
 
     // calling method delete cart item
     const noDataFounds = computed(() => {
-      console.log(carts.value.length);
+      // console.log(carts.value.length);
       if (carts.value.length == 0) {
         return true;
       } else {

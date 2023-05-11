@@ -99,7 +99,7 @@
         </div>
       </div>
       <!-- close icon  -->
-      <label @click="closeNav" class="close_mobile_navigation">
+      <label @click="closeNav" for="" class="close_mobile_navigation">
         <!-- @click="closeNav" -->
         <span class="fs-1 primary_close_btn icon material-symbols-outlined">
           close
@@ -108,6 +108,7 @@
     </div>
     <!-- hamburger icon  -->
     <label
+      for=""
       class="hamburger_icon fs-1 material-symbols-outlined"
       ref="hamburgerIcon"
       @click="openNav"
@@ -153,7 +154,6 @@ export default {
     watch(
       activeUser,
       () => {
-        console.log(user);
         if (activeUser.value?.["firstName" || "lastName"]) {
           user.value =
             activeUser.value?.firstName + " " + activeUser.value?.lastName;

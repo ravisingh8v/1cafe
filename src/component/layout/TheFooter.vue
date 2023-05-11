@@ -12,7 +12,13 @@
 
           <span class="fw-lighter ps-1">Email*</span>
           <div class="d-flex">
-            <input type="text" class="form-control rounded-0" />
+            <input
+              type="text"
+              id="email"
+              name="email"
+              autocomplete=""
+              class="form-control rounded-0"
+            />
             <button class="btn btn-outline-secondary join rounded-0">
               Join
             </button>

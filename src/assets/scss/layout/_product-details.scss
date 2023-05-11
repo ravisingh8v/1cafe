@@ -21,15 +21,11 @@ input::-webkit-inner-spin-button {
   }
   @media (max-width: 768px) {
     h3 {
-      white-space: nowrap;
       font-size: 50px;
     }
   }
   @media (max-width: 576px) {
     width: 85%;
-    h3 {
-      font-size: 40px;
-    }
     h3 {
       font-size: 40px;
     }
@@ -47,10 +43,8 @@ input::-webkit-inner-spin-button {
     border-radius: 50%;
     height: 30px;
     width: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.35s ease-in-out;
+    @extend %flex-middle;
+    transition: $primary-transition;
     &:hover {
       color: $light;
       background-color: $danger;

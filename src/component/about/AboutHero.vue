@@ -5,11 +5,11 @@
       class="hero_data text-white text-center position-absolute top-50 start-50 translate-middle"
     >
       <h2>This Is Us</h2>
-      <h3 class="fs-5">
+      <p class="fs-5 hero-para">
         We're big believers in the power of a good meal and a friendly place to
         eat it. Stop by for fresh, locally sourced food, served with a warm
         smile.
-      </h3>
+      </p>
     </div>
   </section>
 </template>

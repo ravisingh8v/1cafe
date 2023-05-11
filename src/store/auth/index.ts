@@ -10,7 +10,8 @@ export default ({
             isLoading: false,
             isAuthenticated: false,
             activeUser: null,
-            showGuardAlert: false
+            showGuardAlert: false,
+            token: null
         }
     },
     getters,
