@@ -5,7 +5,7 @@
     :validation-schema="schema"
   >
     <div class="mb-3">
-      <label for="email">Email </label>
+      <label for="email">Email<span class="text-danger">*</span></label>
       <Field
         id="email"
         type="email"
@@ -17,15 +17,9 @@
       <span class="invalid-text text-danger">{{ errors.email }}</span>
     </div>
     <div class="mb-4 mt-3">
-      <label for="password">Password </label>
-      <Field
-        id="password"
-        type="password"
-        class="form-control"
-        name="password"
-        placeholder="Enter Password"
-        :class="{ 'is-invalid': errors.password }"
-      />
+      <label for="password">Password<span class="text-danger">*</span></label>
+      <!-- imported input field with credential show hide functionality  -->
+      <BasePasswordField :errors="errors"></BasePasswordField>
       <span class="invalid-text text-danger">{{ errors.password }}</span>
     </div>
     <div class="d-flex flex-column mb-2">
@@ -52,8 +46,9 @@
 <script lang="ts">
 import * as yup from "yup";
 import { Form, Field } from "vee-validate";
+import BasePasswordField from "@/ui/BasePasswordField.vue";
 export default {
-  components: { Form, Field },
+  components: { Form, Field, BasePasswordField },
   props: ["isLoading"],
   setup() {
     // validation
@@ -61,6 +56,7 @@ export default {
       email: yup.string().email().required("this field is required"),
       password: yup.string().required("this field is required").min(6),
     });
+
     return { schema };
   },
 };

@@ -25,18 +25,19 @@
   </section>
 </template>
 <script lang="ts">
-import TheHeader from "./component/layout/TheHeader.vue";
-import TheFooter from "./component/layout/TheFooter.vue";
 import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+// Importing Layout component
+import TheHeader from "./component/layout/TheHeader.vue";
+import TheFooter from "./component/layout/TheFooter.vue";
 
 export default {
   components: { TheHeader, TheFooter },
   setup() {
     const route = useRoute();
     const store = useStore();
-    const isAuthenticated = ref();
+
     // getting current route to hide footer on login page
     const currentRoute = ref("");
     const isNotFound = ref();
@@ -45,7 +46,7 @@ export default {
     });
     watch(checkCurrentRoute, async () => {
       currentRoute.value = checkCurrentRoute?.value;
-      console.log(route.matched);
+      // console.log(route.matched);
 
       if (route.matched[0]["path"] === "/:notFound(.*)*") {
         isNotFound.value = true;
@@ -79,9 +80,11 @@ export default {
     );
 
     // checking authentication
+    const isAuthenticated = ref();
     const isAuth = computed(() => {
       return store.getters["auth/isAuthenticated"];
     });
+    // watch on isAuth computed prop
     watch(
       isAuth,
       () => {
@@ -90,7 +93,7 @@ export default {
       { immediate: true }
     );
 
-    // for profile menu close
+    // profile menu open and close toggle
     const menu = ref();
     function openMenu(value: any) {
       if (value == true) {
@@ -104,8 +107,6 @@ export default {
     }
     // end
 
-    store.dispatch("auth/isAuth");
-    store.dispatch("auth/getUserData");
     const isLoading = ref();
     const isLoadings = computed(() => {
       return store.getters.isLoading;
@@ -113,6 +114,9 @@ export default {
     watch(isLoadings, () => {
       isLoading.value = isLoadings.value;
     });
+
+    store.dispatch("auth/isAuth");
+    store.dispatch("auth/getUserData");
 
     return {
       isLogin,

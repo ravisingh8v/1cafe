@@ -49,7 +49,7 @@ export default {
       { immediate: true }
     );
     // auto movement
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // eslint-disable-next-line
     const setInt = setInterval(() => {
       if (count.value == 2) {
         count.value = 1;
@@ -80,7 +80,7 @@ export default {
       } else {
         count.value = 1;
       }
-      console.log(count.value);
+      // console.log(count.value);
     }
 
     return {

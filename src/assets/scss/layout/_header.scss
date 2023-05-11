@@ -2,7 +2,7 @@
   z-index: 10000;
   .primary_close_btn {
     color: $light;
-    transition: all 0.35s ease-in-out;
+    transition: $primary-transition;
     &:hover {
       color: $danger;
     }
@@ -43,6 +43,7 @@
     height: auto;
   }
 }
+// profile
 .profile_action_wrapper {
   bottom: -90px;
   z-index: 1000;
@@ -56,6 +57,7 @@
 .close_mobile_navigation {
   display: none;
 }
+// hamburger icon
 .hamburger_icon {
   @media (min-width: 768px) {
     display: none !important;
@@ -64,6 +66,7 @@
     display: inline;
   }
 }
+// responsive navbar
 .mobile_navigation {
   @media (min-width: 768px) {
     display: flex;
@@ -99,6 +102,7 @@
     }
   }
 }
+// for toggle navbar
 #toggleNav:checked ~ .mobile_navigation {
   display: flex;
 }

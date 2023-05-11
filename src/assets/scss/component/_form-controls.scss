@@ -1,1 +1,10 @@
 // Form controls styles goes here
+// input placeholder style
+.form-control::placeholder {
+  color: rgb(181, 181, 181);
+  font-weight: 400;
+  font-size: 13px;
+}
+.form-control.is-invalid {
+  background-image: none;
+}

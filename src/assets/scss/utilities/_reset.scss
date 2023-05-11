@@ -8,19 +8,21 @@ ul {
   padding: 0;
   margin: 0;
 }
-// anchor reset
-a {
-  cursor: pointer;
-  text-decoration: none;
-  color: $white;
-  user-select: none;
-}
-label {
-  cursor: pointer;
-}
+// cursor pointer
+a,
+label,
 .icon {
   cursor: pointer;
+}
+// user select disable
+a,
+.icon {
   user-select: none;
+}
+// anchor reset
+a {
+  text-decoration: none;
+  color: $white;
 }
 
 // btn resets
@@ -28,20 +30,18 @@ label {
   padding: 0.75rem 1.275rem;
 }
 
+// setting default heading
 h1,
 h2,
 h3 {
   font-family: $font-family-cursive;
   font-size: $font-size-headings;
 }
+
+// default close button behavior
 .close_button {
-  transition: all 0.35s ease-in-out;
+  transition: $primary-transition;
   &:hover {
     color: $danger;
   }
-}
-.form-control::placeholder {
-  color: rgb(181, 181, 181);
-  font-weight: 400;
-  font-size: 13px;
 }

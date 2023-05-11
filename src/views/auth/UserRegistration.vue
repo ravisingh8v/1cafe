@@ -40,7 +40,9 @@
               </div> -->
       <div class="row gx-0 g-2">
         <div class="col-6">
-          <label for="firstname">Firstname</label>
+          <label for="firstname"
+            >Firstname<span class="text-danger">*</span></label
+          >
           <Field
             type="text"
             class="form-control"
@@ -53,7 +55,9 @@
           <span class="invalid-text text-danger">{{ errors.firstName }}</span>
         </div>
         <div class="col-6">
-          <label for="lastname">lastName</label>
+          <label for="lastname"
+            >lastName<span class="text-danger">*</span></label
+          >
           <Field
             type="text"
             class="form-control"
@@ -70,7 +74,7 @@
     <!-- end -->
     <!-- for login and registration similar fields  -->
     <div class="mb-3" v-if="!isManageProfileRoute">
-      <label for="email">Email </label>
+      <label for="email">Email<span class="text-danger">*</span></label>
       <Field
         id="email"
         type="email"
@@ -82,15 +86,9 @@
       <span class="invalid-text text-danger">{{ errors.email }}</span>
     </div>
     <div class="mb-4 mt-3" v-if="!isManageProfileRoute">
-      <label for="password">Password </label>
-      <Field
-        id="password"
-        type="password"
-        class="form-control"
-        name="password"
-        placeholder="Enter Password"
-        :class="{ 'is-invalid': errors.password }"
-      />
+      <label for="password">Password<span class="text-danger">*</span></label>
+      <!-- imported input field with credential show hide functionality  -->
+      <BasePasswordField :errors="errors"></BasePasswordField>
       <span class="invalid-text text-danger">{{ errors.password }}</span>
     </div>
     <div class="d-flex flex-column mb-2">
@@ -116,11 +114,12 @@
 import * as yup from "yup";
 import { reactive, watch, ref, defineComponent } from "vue";
 import { Form, Field } from "vee-validate";
+import BasePasswordField from "@/ui/BasePasswordField.vue";
 export default defineComponent({
   // props
   props: ["isLoading", "isManageProfileRoute", "manageProfileData"],
   // component
-  components: { Form, Field },
+  components: { Form, Field, BasePasswordField },
 
   setup(props: any) {
     // validation
@@ -155,7 +154,12 @@ export default defineComponent({
       },
       { immediate: true }
     );
-    return { schema: schema.value, firstName, lastName };
+
+    return {
+      schema: schema.value,
+      firstName,
+      lastName,
+    };
   },
 });
 </script>

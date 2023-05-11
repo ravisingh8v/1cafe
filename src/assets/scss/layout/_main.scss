@@ -13,6 +13,7 @@
     background-image: url("@/assets/images/mainSection/drink.webp");
     @extend %bg-image-properties;
   }
+  // home  feed data
   .feed_data {
     width: 50%;
     @media (max-width: 576px) {

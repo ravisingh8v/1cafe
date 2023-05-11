@@ -38,8 +38,8 @@ export default {
         // id is greater than 5 means its firebase auto generated id 
         if (payload.id.length > 5) {
             const cartId = payload.id
+            // eslint-disable-next-line
             axios.put(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart/${cartId}.json`, { ...payload }).then((response) => {
-                console.log(response);
                 context.commit('isLoading', false)
                 context.dispatch('getCartData')
             }).catch(() => {
@@ -47,8 +47,8 @@ export default {
             })
             // if its manual generated id
         } else {
+            // eslint-disable-next-line
             axios.post(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart.json`, { ...payload }).then((response) => {
-                console.log(response);
                 context.commit('isLoading', false)
                 context.dispatch('getCartData')
             }).catch(() => {
@@ -100,8 +100,8 @@ export default {
     async deleteCartItem(_: any, payload: any) {
         const userId = localStorage.getItem('userId')
         const cartItemId = payload;
+        // eslint-disable-next-line
         await axios.delete(`${process.env.VUE_APP_BASE_URL}users/${userId}/cart/${cartItemId}.json`).then((response) => {
-            console.log(response);
         })
     }
 }

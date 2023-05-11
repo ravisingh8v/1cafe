@@ -5,57 +5,15 @@
 
     <!-- navigation  -->
     <section class="theme-p mt-3">
-      <nav
-        class="px-1 d-flex justify-content-between order_breadcrumb border-bottom text-secondary position-relative"
-      >
-        <div class="text-nowrap">
-          <a
-            to="/"
-            class="pe-2 ps-1 d-inline-block h-100"
-            :class="
-              isBakery
-                ? 'text-primary border-bottom border-3 border-primary'
-                : ''
-            "
-            @click="activeComponent('bakery')"
-            >Bakery</a
-          >
-          <a
-            to="/"
-            class="ps-2 d-inline-block h-100"
-            @click="activeComponent('breakfast')"
-            :class="
-              !isBakery
-                ? 'text-primary border-bottom border-3  border-primary'
-                : ''
-            "
-            >Breakfast</a
-          >
-        </div>
-        <div class="card_btn">
-          <button
-            class="py-1 px-sm-4 px-2 btn btn-secondary d-flex align-items-center"
-            @click="viewCart"
-          >
-            <span class="p-2 material-symbols-outlined me-2 position-relative">
-              shopping_cart
-              <div
-                class="position-absolute top-0 end-0 cart_item_count rounded-circle bg-danger"
-              >
-                {{ cartItems }}
-              </div> </span
-            ><span class="me-2 d-none d-sm-block">View Cart</span>
-          </button>
-        </div>
-      </nav>
+      <!-- Breadcrumb component  -->
+      <BreadcrumbAndCart
+        :cartItems="cartItems"
+        :isBakery="isBakery"
+        @activeComponent="activeComponent"
+        @viewCart="viewCart"
+      ></BreadcrumbAndCart>
 
-      <!-- router view  -->
-      <!-- <RouterView v-slot="slotProps">
-        <Transition name="route" mode="out-in">
-          <component :is="slotProps.Component"></component>s
-        </Transition>
-      </RouterView> -->
-
+      <!-- Breakfast and Bakery component  -->
       <section class="px-1 mt-5">
         <Transition name="route" mode="out-in">
           <component
@@ -65,6 +23,7 @@
         </Transition>
       </section>
     </section>
+
     <!-- overlay component  -->
     <Transition name="overlay">
       <section
@@ -90,10 +49,10 @@
   </section>
 </template>
 <script lang="ts">
-import OrderHero from "@/component/layout/OrderHero.vue";
-import BakeryList from "@/component/product/bakery/BakeryList.vue";
-import BreakfastList from "@/component/product/breakfast/BreakfastList.vue";
-import ProductDetail from "@/component/product/product-details/ProductDetail.vue";
+import OrderHero from "@/component/order/OrderHero.vue";
+import BakeryList from "@/component/order/BakeryList.vue";
+import BreakfastList from "@/component/order/BreakfastList.vue";
+import ProductDetail from "@/component/order/ProductDetail.vue";
 
 import { useStore } from "vuex";
 import {
@@ -106,8 +65,15 @@ import {
 } from "vue";
 import CartDetails from "@/component/cart/CartDetails.vue";
 import { Cart } from "@/component/cart/model/CartModel";
+import BreadcrumbAndCart from "@/component/order/BreadcrumbAndCart.vue";
 export default defineComponent({
-  components: { OrderHero, BakeryList, ProductDetail, CartDetails },
+  components: {
+    OrderHero,
+    BakeryList,
+    ProductDetail,
+    CartDetails,
+    BreadcrumbAndCart,
+  },
   setup() {
     const store = useStore();
     // for active component
