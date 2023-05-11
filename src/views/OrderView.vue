@@ -11,6 +11,8 @@
         :isBakery="isBakery"
         @activeComponent="activeComponent"
         @viewCart="viewCart"
+        @searchedTerm="searchedTerm"
+        :clearSearchValue="clearSearchValue"
       ></BreadcrumbAndCart>
 
       <!-- Breakfast and Bakery component  -->
@@ -19,6 +21,7 @@
           <component
             :is="currentComponent"
             @getDetails="getDetails"
+            @clearSearch="clearSearch"
           ></component>
         </Transition>
       </section>
@@ -152,6 +155,31 @@ export default defineComponent({
     function closeModel() {
       productDetail.value = "";
     }
+
+    // search
+    function searchedTerm(event: any) {
+      const searchedTerm = ref(event.target.value);
+      allBreakfastProduct.value = products?.value.filter(
+        (res: any) =>
+          res.title.toLowerCase().includes(searchedTerm.value) &&
+          res.category == "breakfast"
+      );
+      allBakeryProduct.value = products?.value.filter(
+        (res: any) =>
+          res.title.toLowerCase().includes(searchedTerm.value.toLowerCase()) &&
+          res.category == "bakery"
+      );
+    }
+    const clearSearchValue = ref();
+    function clearSearch() {
+      clearSearchValue.value = "";
+      allBakeryProduct.value = products.value.filter(
+        (res: any) => res.category == "bakery"
+      );
+      allBreakfastProduct.value = products.value.filter(
+        (res: any) => res.category == "breakfast"
+      );
+    }
     // provide this to bakery and breakfast component
     provide("allBakeryProduct", allBakeryProduct);
     provide("allBreakfastProduct", allBreakfastProduct);
@@ -165,6 +193,7 @@ export default defineComponent({
       currentComponent,
       activeComponent,
       isBakery,
+
       getDetails,
       viewCart,
       productDetail,
@@ -175,6 +204,9 @@ export default defineComponent({
       itemDeleted,
       editCartItem,
       closeModel,
+      searchedTerm,
+      clearSearch,
+      clearSearchValue,
     };
   },
 });
