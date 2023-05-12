@@ -25,14 +25,21 @@
           >Breakfast</a
         >
       </div>
+      <!-- search  -->
       <div class="search_wrapper ms-0 ms-md-3 d-md-block d-none">
+        <BaseSearch
+          :clearSearchValue="clearSearchValue"
+          @searchedTerm="$emit('searchedTerm', $event)"
+        ></BaseSearch>
+      </div>
+      <!-- <div class="search_wrapper ms-0 ms-md-3 d-md-block d-none">
         <div class="search_bar_wrapper position-relative">
           <input
             type="search"
             placeholder="Search"
             class="form-control"
-            :value="clearSearchValue"
-            @input="$emit('searchedTerm', $event)"
+            v-model="searchedTerm"
+            @input="$emit('searchedTerm', searchedTerm)"
           />
           <span
             class="material-symbols-outlined icon position-absolute top-50 end-0 translate-middle-y pe-2"
@@ -40,7 +47,7 @@
             search
           </span>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="card_btn">
       <button
@@ -60,7 +67,10 @@
   </nav>
 </template>
 <script lang="ts">
+import BaseSearch from "@/ui/BaseSearch.vue";
+import { ref, watch, computed } from "vue";
 export default {
   props: ["cartItems", "isBakery", "clearSearchValue"],
+  components: { BaseSearch },
 };
 </script>

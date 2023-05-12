@@ -108,7 +108,7 @@ export default {
       return props.cartData;
     });
     watch(cartData, () => {
-      carts.value = cartData.value;
+      carts.value = cartData.value.reverse();
     });
 
     // calling method delete cart item
