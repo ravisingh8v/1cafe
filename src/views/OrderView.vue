@@ -11,14 +11,25 @@
         :isBakery="isBakery"
         @activeComponent="activeComponent"
         @viewCart="viewCart"
+        @searchedTerm="searchedTerm"
+        :clearSearchValue="clearSearchValue"
       ></BreadcrumbAndCart>
 
       <!-- Breakfast and Bakery component  -->
-      <section class="px-1 mt-5">
+      <section class="px-1 mt-3 mt-md-5">
+        <!-- Search  -->
+        <div class="search_wrapper mb-3 ms-0 ms-md-3 d-md-none d-block">
+          <BaseSearch
+            :clearSearchValue="clearSearchValue"
+            @searchedTerm="searchedTerm"
+          ></BaseSearch>
+        </div>
+        <!-- Products  -->
         <Transition name="route" mode="out-in">
           <component
             :is="currentComponent"
             @getDetails="getDetails"
+            @clearSearch="clearSearch"
           ></component>
         </Transition>
       </section>
@@ -66,6 +77,7 @@ import {
 import CartDetails from "@/component/cart/CartDetails.vue";
 import { Cart } from "@/component/cart/model/CartModel";
 import BreadcrumbAndCart from "@/component/order/BreadcrumbAndCart.vue";
+import BaseSearch from "@/ui/BaseSearch.vue";
 export default defineComponent({
   components: {
     OrderHero,
@@ -73,6 +85,7 @@ export default defineComponent({
     ProductDetail,
     CartDetails,
     BreadcrumbAndCart,
+    BaseSearch,
   },
   setup() {
     const store = useStore();
@@ -99,13 +112,23 @@ export default defineComponent({
     const products = computed(() => {
       return store.getters["products/allProducts"];
     });
-    watch(products, () => {
-      allBakeryProduct.value = products.value.filter(
+
+    // function to filter all bakery food
+    const filterBakeryProduct = () => {
+      return (allBakeryProduct.value = products.value.filter(
         (res: any) => res.category == "bakery"
-      );
-      allBreakfastProduct.value = products.value.filter(
+      ));
+    };
+    // function to filter all breakfast food
+    const filterBreakFastProduct = () => {
+      return (allBreakfastProduct.value = products.value.filter(
         (res: any) => res.category == "breakfast"
-      );
+      ));
+    };
+
+    watch(products, () => {
+      filterBakeryProduct();
+      filterBreakFastProduct();
     });
 
     // get details function and sending to another component
@@ -152,6 +175,30 @@ export default defineComponent({
     function closeModel() {
       productDetail.value = "";
     }
+
+    // search
+    function searchedTerm(event: any) {
+      clearSearchValue.value = false;
+      console.log("worked", event);
+
+      allBreakfastProduct.value = products?.value.filter(
+        (res: any) =>
+          res.title.toLowerCase().includes(event.toLowerCase()) &&
+          res.category == "breakfast"
+      );
+      allBakeryProduct.value = products?.value.filter(
+        (res: any) =>
+          res.title.toLowerCase().includes(event.toLowerCase()) &&
+          res.category == "bakery"
+      );
+    }
+    // clear search filter
+    const clearSearchValue = ref(false);
+    function clearSearch() {
+      clearSearchValue.value = true;
+      filterBakeryProduct();
+      filterBreakFastProduct();
+    }
     // provide this to bakery and breakfast component
     provide("allBakeryProduct", allBakeryProduct);
     provide("allBreakfastProduct", allBreakfastProduct);
@@ -175,6 +222,9 @@ export default defineComponent({
       itemDeleted,
       editCartItem,
       closeModel,
+      searchedTerm,
+      clearSearch,
+      clearSearchValue,
     };
   },
 });
