@@ -84,6 +84,9 @@ dialog {
   margin: 0;
   overflow: hidden;
   background-color: white;
+  @media (max-width: 576px) {
+    width: 20rem;
+  }
   header {
     background-color: $danger;
     color: white;
