@@ -78,6 +78,7 @@ import CartDetails from "@/component/cart/CartDetails.vue";
 import { Cart } from "@/component/cart/model/CartModel";
 import BreadcrumbAndCart from "@/component/order/BreadcrumbAndCart.vue";
 import BaseSearch from "@/ui/BaseSearch.vue";
+import productService from "@/views/product/service/product.services";
 export default defineComponent({
   components: {
     OrderHero,
@@ -146,6 +147,8 @@ export default defineComponent({
       return store.getters["products/cartData"];
     });
     watch(carts, () => {
+      console.log(carts);
+
       cartData.value = carts.value;
       cartItems.value = carts.value.length;
     });
@@ -203,9 +206,19 @@ export default defineComponent({
     provide("allBakeryProduct", allBakeryProduct);
     provide("allBreakfastProduct", allBreakfastProduct);
 
+    // previous approach
     // calling stores action method here
-    store.dispatch("products/getAllProducts");
-    store.dispatch("products/getCartData");
+    // store.dispatch("products/getAllProducts");
+
+    const getProducts = productService.getAllProducts().then((res: any) => {
+      store.dispatch("products/getAllProducts", res);
+    });
+
+    // store.dispatch("products/getCartData");
+
+    const getCartData = productService.getCartData().then((res: any) => {
+      store.dispatch("products/getCartData", res);
+    });
 
     // return
     return {

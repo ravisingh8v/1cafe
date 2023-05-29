@@ -31,6 +31,7 @@ import { useStore } from "vuex";
 // Importing Layout component
 import TheHeader from "./component/layout/TheHeader.vue";
 import TheFooter from "./component/layout/TheFooter.vue";
+import authService from "./views/auth/service/auth.services";
 
 export default {
   components: { TheHeader, TheFooter },
@@ -116,7 +117,8 @@ export default {
     });
 
     store.dispatch("auth/isAuth");
-    store.dispatch("auth/getUserData");
+    authService.getUserData();
+    // store.dispatch("auth/getUserData");
 
     return {
       isLogin,

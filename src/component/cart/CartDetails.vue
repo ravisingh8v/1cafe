@@ -71,6 +71,7 @@ import { ref, computed, watch, Ref } from "vue";
 import { useStore } from "vuex";
 import CartDetailsItem from "./CartDetailsItem.vue";
 import { Cart } from "./model/CartModel";
+import productService from "@/views/product/service/product.services";
 export default {
   components: { CartDetailsItem },
   props: {
@@ -80,7 +81,11 @@ export default {
   },
   setup(props: any, context: any) {
     const store = useStore();
-    store.dispatch("products/getCartData");
+
+    // calling get cart data service
+    productService.getCartData().then((res: any) => {
+      store.dispatch("products/getCartData", res);
+    });
 
     // subtotal price
     const subTotal: Ref<number> = ref(0);
@@ -139,7 +144,8 @@ export default {
 
     async function deleteItem(id: number) {
       try {
-        store.dispatch("products/deleteCartItem", id);
+        productService.deleteCartItem(id);
+        // store.dispatch("products/deleteCartItem", id);
         const index = carts.value.findIndex((data: any) => data.id === id);
         carts.value.splice(index, 1);
         context.emit("itemDeleted", carts.value.length);

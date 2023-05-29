@@ -55,6 +55,7 @@
 import { useStore } from "vuex";
 import { onMounted } from "vue";
 import { ref, watch, computed } from "vue";
+import productService from "@/views/product/service/product.services";
 export default {
   props: ["productDetail"],
   emits: ["cartAdded", "closeModel"],
@@ -112,15 +113,30 @@ export default {
      */
     async function addToCart() {
       try {
-        store.dispatch("products/addToCart", {
+        await productService.addToCart({
           ...props.productDetail,
           quantity: quantity.value,
           totalPrice: price.value,
         });
+
+        await productService.getCartData().then((res: any) => {
+          store.dispatch("products/getCartData", res);
+        });
+
+        // await store.dispatch("products/getCartData");
+
+        // --- previous approach ---
+
+        // store.dispatch("products/addToCart", {
+        //   ...props.productDetail,
+        //   quantity: quantity.value,
+        //   totalPrice: price.value,
+        // });
+
         // emitting this to close details overlay
         setTimeout(() => {
           context.emit("cartAdded", true);
-        }, 1000);
+        }, 500);
       } catch (error) {
         // props.productDetail = null;
       }

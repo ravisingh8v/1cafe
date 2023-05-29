@@ -6,6 +6,7 @@ export default {
         return state.isLoading
     },
     cartData(state: any) {
+
         return state.cartData
     }
 }

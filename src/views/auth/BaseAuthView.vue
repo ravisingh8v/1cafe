@@ -55,6 +55,9 @@ import { FormContext } from "vee-validate";
 // store
 import { useStore } from "vuex";
 
+import authService from "./service/auth.services";
+import productService from "../product/service/product.services";
+
 export default {
   // components: { Field, Form },
   components: { UserRegistration, UserLogin },
@@ -103,38 +106,58 @@ export default {
 
       // on Login
       if (isRouteLogin.value) {
-        try {
-          await store.dispatch("auth/userLogin", {
+        authService
+          .userLogin({
             email: value.email,
             password: value.password,
+          })
+          .then((res: any) => {
+            if (!res.response) {
+              router.push("/");
+              store.dispatch("auth/userLogin", res);
+              authService.getUserData();
+              // store.dispatch("auth/getUserData");
+            } else {
+              catchError.value = res.message;
+            }
           });
-          store.dispatch("auth/getUserData");
-          // console.log("try");
-        } catch (error) {
-          catchError.value = error;
-          return;
-        }
-        router.push("/");
+
+        // await store.dispatch("auth/userLogin", {
+        //   email: value.email,
+        //   password: value.password,
+        // });
+        // console.log("try");
       } else {
         // on registration sending this to admin dashboard
         if (value.password) {
           try {
-            await store.dispatch("auth/signUpWithEmailPassword", {
+            // await store.dispatch("auth/signUpWithEmailPassword", {
+            //   email: value.email,
+            //   password: value.password,
+            // });
+            await authService.signUpWithEmailPassword({
               email: value.email,
               password: value.password,
             });
+            router.push("/login");
           } catch (error) {
             catchError.value = error;
             return false;
           }
-          router.push("/login");
         }
-        // sending this to database
-        await store.dispatch("auth/registration", {
+
+        await authService.registration({
           firstName: value.firstName,
           lastName: value.lastName,
           email: value.email,
         });
+        // --- previous approach ---
+        // sending this to database
+        // await store.dispatch("auth/registration", {
+        //   firstName: value.firstName,
+        //   lastName: value.lastName,
+        //   email: value.email,
+        // });
       }
     }
 

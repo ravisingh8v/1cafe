@@ -20,7 +20,7 @@ const routes: Array<RouteRecordRaw> = [
   // },
   { path: '/contact', component: () => import('../views/ContactView.vue') },
   { path: '/about', component: () => import('../views/AboutView.vue') },
-  { path: '/order', component: () => import('../views/OrderView.vue'), meta: { requireAuth: true } },
+  { path: '/order', component: () => import('../views/product/OrderView.vue'), meta: { requireAuth: true } },
   { path: '/login', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },
   { path: '/registration', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },
   { path: '/manage-profile', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: true } },
