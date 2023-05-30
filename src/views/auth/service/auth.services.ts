@@ -1,19 +1,21 @@
 import Http from '@/interceptor/http.interceptor';
 import store from '@/store';
+import { user } from '../model/ModelRegistration';
 const url = process.env.VUE_APP_BASE_URL
 
 class AuthService {
-    async registration(userData: any) {
+    async registration(userData: user) {
         const userId = store.getters['auth/userId'] || localStorage.getItem('userId')
 
         return Http.patch(`${url}users/${userId}.json`, userData).then((res) => {
             return res.data
-        }).catch((res: any) => { store.commit('auth/isLoading', false); return res.message })
+        }).catch((res: Error) => { store.commit('auth/isLoading', false); return res.message })
     }
 
-    async signUpWithEmailPassword(user: any) {
-        return Http.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E", { email: user.email, password: user.password, returnSecureToken: true })
-            .then((res) => {
+    async signUpWithEmailPassword(user: user) {
+        // console.log(user);
+        return Http.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E", { ...user, returnSecureToken: true })
+            .then((res: any) => {
                 const responseData = res.data;
 
                 store.commit('auth/setUserId', responseData.localId);
@@ -30,8 +32,10 @@ class AuthService {
             })
     }
 
-    async userLogin(user: any) {
-        return Http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E`, { email: user.email, password: user.password, returnSecureToken: true })
+    async userLogin(user: user) {
+        // console.log(user);
+
+        return Http.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAyHUgf2WKTaBYttSOTf-mifdTj7qRCg8E`, { ...user, returnSecureToken: true })
             .then((res) => {
                 return res.data
             }).catch((res) => {

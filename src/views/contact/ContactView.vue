@@ -126,6 +126,7 @@ import * as yup from "yup";
 import { Field, Form, FormContext } from "vee-validate";
 import { defineComponent, ref, computed, watch } from "vue";
 import { useStore } from "vuex";
+import contactService from "./service/contact.services";
 export default defineComponent({
   // declaring components
   components: { Field, Form },
@@ -187,22 +188,40 @@ export default defineComponent({
       // console.log(day);
 
       // Sending contact request
-      try {
-        await store.dispatch("contact/sendingUserMessage", {
+      // try {
+      await contactService
+        .sendingUserMessage({
           firstName: value.firstName,
           lastName: value.lastName,
           email: value.email,
           message: value.message,
           time: time,
           day: day,
+        })
+        .then((res) => {
+          console.log(res);
+
+          res.data ? (submitted.value = true) : (catchError.value = res);
         });
-        // for opening success message
-        submitted.value = true;
-        // if error occur
-      } catch (error: any) {
-        catchError.value = error;
-        console.log(error);
-      }
+      // .catch((res) => {
+      //   console.log("catch", res);
+      // });
+
+      // --- previous approach ---
+      // await store.dispatch("contact/sendingUserMessage", {
+      //   firstName: value.firstName,
+      //   lastName: value.lastName,
+      //   email: value.email,
+      //   message: value.message,
+      //   time: time,
+      //   day: day,
+      // });
+      // for opening success message
+      // if error occur
+      // } catch (error: any) {
+      //   catchError.value = error;
+      //   console.log(error);
+      // }
     }
     // end
 

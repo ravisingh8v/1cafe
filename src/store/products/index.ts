@@ -8,7 +8,7 @@ export default ({
     state() {
         return {
             allProducts: null,
-            isLoading: false,
+            // isLoading: false,
             productDetails: '',
             cartData: null
         }

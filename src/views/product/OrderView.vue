@@ -147,7 +147,7 @@ export default defineComponent({
       return store.getters["products/cartData"];
     });
     watch(carts, () => {
-      console.log(carts);
+      // console.log(carts);
 
       cartData.value = carts.value;
       cartItems.value = carts.value.length;
@@ -160,7 +160,7 @@ export default defineComponent({
     }
 
     //when cart added
-    function cartAdded(value: any) {
+    function cartAdded(value: boolean) {
       if (value == true) {
         productDetail.value = null;
       }
@@ -182,7 +182,7 @@ export default defineComponent({
     // search
     function searchedTerm(event: any) {
       clearSearchValue.value = false;
-      console.log("worked", event);
+      // console.log("worked", event);
 
       allBreakfastProduct.value = products?.value.filter(
         (res: any) =>

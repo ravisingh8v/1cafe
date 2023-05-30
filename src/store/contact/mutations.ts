@@ -1,9 +1,9 @@
 export default {
-    isLoading(state: any, payload: any) {
+    // isLoading(state: any, payload: any) {
 
-        // commit('isLoading', payload)
+    //     // commit('isLoading', payload)
 
 
-        state.isLoading = payload
-    }
+    //     state.isLoading = payload
+    // }
 }

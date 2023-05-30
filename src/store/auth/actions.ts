@@ -2,6 +2,52 @@ import { user } from "@/views/auth/model/ModelRegistration"
 import axios from "axios"
 
 export default {
+
+    /**
+     * login
+     */
+    async userLogin(context: any, userData: any) {
+        const responseData = userData
+        const user = {
+            userId: responseData.localId,
+            email: responseData.email,
+            tokenId: responseData.idToken,
+            expirationTime: responseData.expiresIn
+        }
+        localStorage.setItem('userId', user.userId)
+        localStorage.setItem('token', user.tokenId)
+        localStorage.setItem('expirationTime', user.expirationTime)
+
+        const authenticate = () => {
+            if (localStorage.getItem('token')?.length && localStorage.getItem('token')) {
+                return true
+            } else {
+                return false
+            }
+        }
+        context.commit('setAuthentication', authenticate)
+        context.commit('setUserId', user.userId)
+        context.commit('isLoading', false)
+    },
+
+    // Check Authentication 
+    isAuth(context: any) {
+        const token = localStorage.getItem('token')
+        if (token) {
+            context.commit('setAuthentication', true)
+        } else {
+            context.commit('setAuthentication', false)
+        }
+    },
+    // logout 
+    logout(context: any) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+        context.commit('setUser', '')
+        context.commit('setAuthentication', false)
+    }
+
+
     // --- Previous Approach ---  
     // /**
     //  * register user into database 
@@ -55,32 +101,7 @@ export default {
 
     // },
 
-    /**
-     * login
-     */
-    async userLogin(context: any, userData: any) {
-        const responseData = userData
-        const user = {
-            userId: responseData.localId,
-            email: responseData.email,
-            tokenId: responseData.idToken,
-            expirationTime: responseData.expiresIn
-        }
-        localStorage.setItem('userId', user.userId)
-        localStorage.setItem('token', user.tokenId)
-        localStorage.setItem('expirationTime', user.expirationTime)
 
-        const authenticate = () => {
-            if (localStorage.getItem('token')?.length && localStorage.getItem('token')) {
-                return true
-            } else {
-                return false
-            }
-        }
-        context.commit('setAuthentication', authenticate)
-        context.commit('setUserId', user.userId)
-        context.commit('isLoading', false)
-    },
     // /**
     //  * login
     //  */
@@ -138,18 +159,5 @@ export default {
     // }
     // },
 
-    isAuth(context: any) {
-        const token = localStorage.getItem('token')
-        if (token) {
-            context.commit('setAuthentication', true)
-        } else {
-            context.commit('setAuthentication', false)
-        }
-    },
-    logout(context: any) {
-        localStorage.removeItem('token')
-        localStorage.removeItem('userId')
-        context.commit('setUser', '')
-        context.commit('setAuthentication', false)
-    }
+
 }

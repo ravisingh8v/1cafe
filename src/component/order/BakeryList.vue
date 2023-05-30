@@ -22,6 +22,7 @@
 import BaseItemNotFound from "@/ui/BaseItemNotFound.vue";
 import BaseProductItem from "@/ui/BaseProductItem.vue";
 import { inject } from "vue";
+import { Cart } from "../cart/model/CartModel";
 export default {
   // props: ["allBakeryProduct"],
   components: { BaseProductItem, BaseItemNotFound },

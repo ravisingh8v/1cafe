@@ -6,7 +6,7 @@ const Http = axios.create({
 })
 
 Http.interceptors.request.use((config: any) => {
-    console.log(config);
+    // console.log(config);
     if (config.method != 'delete') {
         store.commit('auth/isLoading', true)
     }

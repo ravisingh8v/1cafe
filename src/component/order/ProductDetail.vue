@@ -94,6 +94,7 @@ export default {
         quantity.value = 10;
       }
     }
+    // comment
     function removeQuantity() {
       if (quantity.value >= 2) {
         quantity.value -= 1;
@@ -108,11 +109,36 @@ export default {
       return props.productDetail.id.length > 5;
     });
 
+    // const cartData = ref();
+    // const product = ref();
+    // productService.getCartData().then((res: any) => {
+    //   store.dispatch("products/getCartData", res);
+    //   cartData.value = store.getters["products/cartData"];
+    // });
     /**
      * Add To Cart Product
      */
     async function addToCart() {
       try {
+        // await cartData.value.forEach((res: any) => {
+        //   if (props.productDetail.id == res.productId) {
+        //     const updateQuantity = res.quantity + quantity.value;
+        //     const updatedTotalPrice = res.totalPrice + price.value;
+        //     product.value = {
+        //       ...props.productDetail,
+        //       quantity: updateQuantity,
+        //       totalPrice: updatedTotalPrice,
+        //       editId: res.id,
+        //     };
+        //     console.log("matched");
+        //   } else {
+        //     product.value = {
+        //       ...props.productDetail,
+        //       quantity: quantity.value,
+        //       totalPrice: price.value,
+        //     };
+        //   }
+        // });
         await productService.addToCart({
           ...props.productDetail,
           quantity: quantity.value,

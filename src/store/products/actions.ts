@@ -22,6 +22,33 @@ export default {
         context.commit('getAllProducts', responseData)
     },
 
+
+    /**
+    * get Cart Data
+    * @param context 
+    */
+    getCartData(context: any, cartData: any) {
+        const responseData = [];
+        for (const key in cartData) {
+            const responses = cartData[key]
+            const data = {
+                id: key,
+                productId: responses.id,
+                category: responses.category,
+                description: responses.description,
+                imageUrl: responses.imageUrl,
+                price: responses.price,
+                quantity: responses.quantity,
+                title: responses.title,
+                totalPrice: responses.totalPrice
+            }
+            responseData.push(data)
+        }
+        context.commit('getCartData', responseData)
+    },
+
+
+
     // previous approach 
     // getAllProducts(context: any) {
     //     // context.commit('isLoading', true)
@@ -86,28 +113,7 @@ export default {
 
     // },
 
-    /**
-     * get Cart Data
-     * @param context 
-     */
-    getCartData(context: any, cartData: any) {
-        const responseData = [];
-        for (const key in cartData) {
-            const responses = cartData[key]
-            const data = {
-                id: key,
-                category: responses.category,
-                description: responses.description,
-                imageUrl: responses.imageUrl,
-                price: responses.price,
-                quantity: responses.quantity,
-                title: responses.title,
-                totalPrice: responses.totalPrice
-            }
-            responseData.push(data)
-        }
-        context.commit('getCartData', responseData)
-    },
+
 
     //--- previous approach --- 
     // /**

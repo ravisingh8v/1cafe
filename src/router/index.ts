@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
   //   // which is lazy-loaded when the route is visited.
   //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   // },
-  { path: '/contact', component: () => import('../views/ContactView.vue') },
+  { path: '/contact', component: () => import('../views/contact/ContactView.vue') },
   { path: '/about', component: () => import('../views/AboutView.vue') },
   { path: '/order', component: () => import('../views/product/OrderView.vue'), meta: { requireAuth: true } },
   { path: '/login', component: () => import('../views/auth/BaseAuthView.vue'), meta: { requireAuth: false } },

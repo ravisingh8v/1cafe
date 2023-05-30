@@ -96,7 +96,7 @@ export default {
 
     // profile menu open and close toggle
     const menu = ref();
-    function openMenu(value: any) {
+    function openMenu(value: boolean) {
       if (value == true) {
         menu.value = true;
       } else {

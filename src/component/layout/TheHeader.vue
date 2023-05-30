@@ -173,7 +173,7 @@ export default {
     }
 
     // for mobile navigation
-    const isChecked = ref<any>(false);
+    const isChecked = ref<boolean>(false);
     function closeNav() {
       isChecked.value = false;
     }

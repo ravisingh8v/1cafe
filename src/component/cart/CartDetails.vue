@@ -83,7 +83,7 @@ export default {
     const store = useStore();
 
     // calling get cart data service
-    productService.getCartData().then((res: any) => {
+    productService.getCartData().then((res: Cart[]) => {
       store.dispatch("products/getCartData", res);
     });
 
@@ -151,7 +151,7 @@ export default {
         context.emit("itemDeleted", carts.value.length);
         // checkCartData(carts.value);
       } catch (e: any) {
-        console.log("error");
+        // console.log("error");
       }
     }
     // to hide the Element

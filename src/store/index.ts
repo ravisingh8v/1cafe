@@ -10,7 +10,7 @@ export default createStore({
   },
   getters: {
     isLoading(_: any, rootState: any) {
-      return rootState['products/isLoading'] || rootState['auth/isLoading']
+      return rootState['auth/isLoading']
 
     }
   },
