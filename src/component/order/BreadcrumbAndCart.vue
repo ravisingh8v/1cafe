@@ -32,22 +32,6 @@
           @searchedTerm="$emit('searchedTerm', $event)"
         ></BaseSearch>
       </div>
-      <!-- <div class="search_wrapper ms-0 ms-md-3 d-md-block d-none">
-        <div class="search_bar_wrapper position-relative">
-          <input
-            type="search"
-            placeholder="Search"
-            class="form-control"
-            v-model="searchedTerm"
-            @input="$emit('searchedTerm', searchedTerm)"
-          />
-          <span
-            class="material-symbols-outlined icon position-absolute top-50 end-0 translate-middle-y pe-2"
-          >
-            search
-          </span>
-        </div>
-      </div> -->
     </div>
     <div class="card_btn">
       <button

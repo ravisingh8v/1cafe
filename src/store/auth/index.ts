@@ -11,7 +11,8 @@ export default ({
             isAuthenticated: false,
             activeUser: null,
             showGuardAlert: false,
-            token: null
+            token: null,
+
         }
     },
     getters,

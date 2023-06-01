@@ -25,7 +25,7 @@
   </section>
 </template>
 <script lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 // Importing Layout component
@@ -45,16 +45,20 @@ export default {
     const checkCurrentRoute = computed(() => {
       return route.path;
     });
-    watch(checkCurrentRoute, async () => {
-      currentRoute.value = checkCurrentRoute?.value;
-      // console.log(route.matched);
-
-      if (route.matched[0]["path"] === "/:notFound(.*)*") {
-        isNotFound.value = true;
-      } else {
-        isNotFound.value = false;
-      }
-    });
+    watch(
+      checkCurrentRoute,
+      async () => {
+        currentRoute.value = checkCurrentRoute?.value;
+        if (route.matched[0]) {
+          if (route.matched[0]["path"] === "/:notFound(.*)*") {
+            isNotFound.value = true;
+          } else {
+            isNotFound.value = false;
+          }
+        }
+      },
+      { immediate: true }
+    );
     const isLogin = computed(() => {
       if (
         currentRoute.value.includes("login") ||
@@ -62,8 +66,9 @@ export default {
         currentRoute.value.includes("/manage-profile")
       ) {
         return currentRoute.value;
+      } else {
+        return false;
       }
-      return false;
     });
 
     // to showing footer when route is ready
@@ -115,6 +120,7 @@ export default {
     watch(isLoadings, () => {
       isLoading.value = isLoadings.value;
     });
+    // onMounted(() => {});
 
     store.dispatch("auth/isAuth");
     authService.getUserData();
@@ -154,3 +160,25 @@ export default {
   opacity: 0;
 }
 </style>
+
+<!-- <base-dialog
+      :title="'Something went wrong'"
+      @close="handleError"
+      :show="!!errorMessage"
+    >
+      <p>{{ errorMessage }}</p>
+    </base-dialog> -->
+
+<!-- function handleError() {
+      store.commit("errorMessage", null);
+      return (errorMessage.value = "");
+    }
+    const errorMessage = ref();
+    const error = computed(() => {
+      // console.log(store.getters.errorMessage);
+      return store.getters.errorMessage;
+    });
+    watch(error, () => {
+      console.log(store.getters.errorMessage);
+      errorMessage.value = error.value;
+    }); -->

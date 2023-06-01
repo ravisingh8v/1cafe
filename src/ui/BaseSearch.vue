@@ -14,6 +14,7 @@
     </span>
   </div>
 </template>
+
 <script lang="ts">
 import { ref, computed, watch } from "vue";
 export default {
@@ -24,7 +25,7 @@ export default {
       return props.clearSearchValue;
     });
     watch(clearFilter, () => {
-      console.log(clearFilter.value);
+      // console.log(clearFilter.value);
 
       if (clearFilter.value == true) {
         searchedTerm.value = null;

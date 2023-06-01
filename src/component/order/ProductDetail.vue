@@ -109,55 +109,24 @@ export default {
       return props.productDetail.id.length > 5;
     });
 
-    // const cartData = ref();
-    // const product = ref();
-    // productService.getCartData().then((res: any) => {
-    //   store.dispatch("products/getCartData", res);
-    //   cartData.value = store.getters["products/cartData"];
-    // });
     /**
      * Add To Cart Product
      */
     async function addToCart() {
       try {
-        // await cartData.value.forEach((res: any) => {
-        //   if (props.productDetail.id == res.productId) {
-        //     const updateQuantity = res.quantity + quantity.value;
-        //     const updatedTotalPrice = res.totalPrice + price.value;
-        //     product.value = {
-        //       ...props.productDetail,
-        //       quantity: updateQuantity,
-        //       totalPrice: updatedTotalPrice,
-        //       editId: res.id,
-        //     };
-        //     console.log("matched");
-        //   } else {
-        //     product.value = {
-        //       ...props.productDetail,
-        //       quantity: quantity.value,
-        //       totalPrice: price.value,
-        //     };
-        //   }
-        // });
-        await productService.addToCart({
-          ...props.productDetail,
-          quantity: quantity.value,
-          totalPrice: price.value,
-        });
+        await productService
+          .addToCart({
+            ...props.productDetail,
+            quantity: quantity.value,
+            totalPrice: price.value,
+          })
+          .then((res) => {
+            console.log(res);
+          });
 
         await productService.getCartData().then((res: any) => {
           store.dispatch("products/getCartData", res);
         });
-
-        // await store.dispatch("products/getCartData");
-
-        // --- previous approach ---
-
-        // store.dispatch("products/addToCart", {
-        //   ...props.productDetail,
-        //   quantity: quantity.value,
-        //   totalPrice: price.value,
-        // });
 
         // emitting this to close details overlay
         setTimeout(() => {
@@ -188,3 +157,44 @@ export default {
   },
 };
 </script>
+
+<!-- /**
+/for none duplicate cart data 
+*/
+
+// const cartData = ref();
+// const product = ref();
+// productService.getCartData().then((res: any) => {
+//   store.dispatch("products/getCartData", res);
+//   cartData.value = store.getters["products/cartData"];
+// }); -->
+
+<!-- // await cartData.value.forEach((res: any) => {
+  //   if (props.productDetail.id == res.productId) {
+  //     const updateQuantity = res.quantity + quantity.value;
+  //     const updatedTotalPrice = res.totalPrice + price.value;
+  //     product.value = {
+  //       ...props.productDetail,
+  //       quantity: updateQuantity,
+  //       totalPrice: updatedTotalPrice,
+  //       editId: res.id,
+  //     };
+  //     console.log("matched");
+  //   } else {
+  //     product.value = {
+  //       ...props.productDetail,
+  //       quantity: quantity.value,
+  //       totalPrice: price.value,
+  //     };
+  //   }
+  // }); -->
+
+<!-- // await store.dispatch("products/getCartData");
+
+        // --- previous approach ---
+
+        // store.dispatch("products/addToCart", {
+        //   ...props.productDetail,
+        //   quantity: quantity.value,
+        //   totalPrice: price.value,
+        // }); -->

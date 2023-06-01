@@ -17,5 +17,6 @@ export default {
     },
     getToken(state: any, payload: any) {
         state.token = payload
-    }
+    },
+
 }

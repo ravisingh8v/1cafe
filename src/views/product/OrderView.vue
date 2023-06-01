@@ -79,6 +79,7 @@ import { Cart } from "@/component/cart/model/CartModel";
 import BreadcrumbAndCart from "@/component/order/BreadcrumbAndCart.vue";
 import BaseSearch from "@/ui/BaseSearch.vue";
 import productService from "@/views/product/service/product.services";
+import useSearch from "@/hooks/useSearch";
 export default defineComponent({
   components: {
     OrderHero,
@@ -88,6 +89,7 @@ export default defineComponent({
     BreadcrumbAndCart,
     BaseSearch,
   },
+  emits: ["searchedTerm", "allBreakfastProduct", "allBakeryProduct"],
   setup() {
     const store = useStore();
     // for active component
@@ -180,21 +182,22 @@ export default defineComponent({
     }
 
     // search
-    function searchedTerm(event: any) {
+    const searchedTerms = ref();
+    async function searchedTerm(event: any) {
       clearSearchValue.value = false;
-      // console.log("worked", event);
+      const { item } = useSearch(products, event);
 
-      allBreakfastProduct.value = products?.value.filter(
-        (res: any) =>
-          res.title.toLowerCase().includes(event.toLowerCase()) &&
-          res.category == "breakfast"
+      allBakeryProduct.value = item.filter(
+        (res: any) => res.category == "bakery"
       );
-      allBakeryProduct.value = products?.value.filter(
-        (res: any) =>
-          res.title.toLowerCase().includes(event.toLowerCase()) &&
-          res.category == "bakery"
+
+      allBreakfastProduct.value = item.filter(
+        (res: any) => res.category == "breakfast"
       );
+      searchedTerms.value = event;
     }
+    provide("searchedTerm", searchedTerms);
+
     // clear search filter
     const clearSearchValue = ref(false);
     function clearSearch() {
@@ -263,3 +266,17 @@ export default defineComponent({
   opacity: 0;
 }
 </style>
+
+<!-- // --- previous approach for search ---
+// console.log("worked", event);
+
+// allBreakfastProduct.value = products?.value.filter(
+//   (res: any) =>
+//     res.title.toLowerCase().includes(event.toLowerCase()) &&
+//     res.category == "breakfast"
+// );
+// allBakeryProduct.value = products?.value.filter(
+//   (res: any) =>
+//     res.title.toLowerCase().includes(event.toLowerCase()) &&
+//     res.category == "bakery"
+// ); -->

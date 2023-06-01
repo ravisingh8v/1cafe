@@ -68,12 +68,17 @@
 }
 // responsive navbar
 .mobile_navigation {
+  transition: all 0.35s ease-in-out;
   @media (min-width: 768px) {
     display: flex;
+    transform: translateX(0);
   }
   @media (max-width: 768px) {
     position: fixed;
-    display: none;
+    transform: translateX(100%);
+    // display: none;
+    opacity: 0;
+    display: flex;
     top: 0;
     bottom: 0;
     left: 0;
@@ -105,4 +110,6 @@
 // for toggle navbar
 #toggleNav:checked ~ .mobile_navigation {
   display: flex;
+  opacity: 1;
+  transform: translateX(0);
 }

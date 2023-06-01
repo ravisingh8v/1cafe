@@ -7,10 +7,6 @@ class ContactService {
     async sendingUserMessage(userData: contactForm) {
         const userId = localStorage.getItem('userId') || 'Not a logged in User';
         return Http.post(`${url}contact-us.json`, { userId: userId, firstName: userData.firstName, lastName: userData.lastName, email: userData.email, message: userData.message, time: userData.time, day: userData.day })
-            .catch((res) => {
-                store.commit('auth/isLoading', false)
-                return res.message
-            })
     }
 }
 const contactService = new ContactService;

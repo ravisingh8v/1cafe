@@ -56,7 +56,6 @@ import { FormContext } from "vee-validate";
 import { useStore } from "vuex";
 
 import authService from "./service/auth.services";
-import productService from "../product/service/product.services";
 
 export default {
   // components: { Field, Form },
@@ -88,21 +87,12 @@ export default {
     // forms Data
     const catchError = ref();
 
-    // form method
-    // const file = ref("");
-    // function uploadFile(event: any) {
-    //   const image = event.target.files[0];
-    //   console.log(image);
-    //   console.log(file);
-    // }
-
     /**
      * sending to store
      * @param value from form
      */
     async function submitForm(value: FormContext["values"]) {
       // click on login
-      // console.log("work");
 
       // on Login
       if (isRouteLogin.value) {
@@ -113,53 +103,41 @@ export default {
           })
           .then((res: any) => {
             // comes from backend
-
-            if (!res.response) {
+            if (res && !res.error) {
               router.push("/");
               store.dispatch("auth/userLogin", res);
               authService.getUserData();
               // store.dispatch("auth/getUserData");
             } else {
-              catchError.value = res.message;
+              catchError.value = res.error?.message;
             }
           });
-
-        // await store.dispatch("auth/userLogin", {
-        //   email: value.email,
-        //   password: value.password,
-        // });
-        // console.log("try");
       } else {
-        // on registration sending this to admin dashboard
+        // on registration sending this to firebase admin dashboard
         if (value.password) {
-          try {
-            // await store.dispatch("auth/signUpWithEmailPassword", {
-            //   email: value.email,
-            //   password: value.password,
-            // });
-            await authService.signUpWithEmailPassword({
+          // if password is not there so its manage profile
+
+          await authService
+            .signUpWithEmailPassword({
               email: value.email,
               password: value.password,
+            })
+            .then((res: any) => {
+              console.log(res);
+              if (res && !res.error) {
+                router.push("/login");
+              } else {
+                catchError.value = res.error?.message;
+              }
             });
-            router.push("/login");
-          } catch (error) {
-            catchError.value = error;
-            return false;
-          }
         }
-
         await authService.registration({
           firstName: value.firstName,
           lastName: value.lastName,
           email: value.email,
         });
-        // --- previous approach ---
-        // sending this to database
-        // await store.dispatch("auth/registration", {
-        //   firstName: value.firstName,
-        //   lastName: value.lastName,
-        //   email: value.email,
-        // });
+        // to getting updated user data when manage profile form is submitted
+        authService.getUserData();
       }
     }
 
@@ -226,3 +204,32 @@ export default {
   },
 };
 </script>
+
+<!-- // --- previous approach ---
+// sending this to database
+// await store.dispatch("auth/registration", {
+//   firstName: value.firstName,
+//   lastName: value.lastName,
+//   email: value.email,
+// }); -->
+
+<!-- // form method
+    // const file = ref("");
+    // function uploadFile(event: any) {
+    //   const image = event.target.files[0];
+    //   console.log(image);
+    //   console.log(file);
+    // } -->
+
+<!-- // await store.dispatch("auth/userLogin", {
+      //   email: value.email,
+      //   password: value.password,
+      // });
+      // console.log("try"); -->
+
+<!-- 
+      // try {
+        // await store.dispatch("auth/signUpWithEmailPassword", {
+        //   email: value.email,
+        //   password: value.password,
+        // }); -->

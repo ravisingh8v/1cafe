@@ -6,38 +6,6 @@
   >
     <!-- this div is visible only when route is registration -->
     <div class="mb-3">
-      <!-- profile upload   -->
-      <!-- <div class="mb-3 profile d-flex align-items-center">
-                <label
-                  for="profile"
-                  class="profile_wrapper overflow-hidden rounded-circle position-relative"
-                >
-                  <span
-                    class="position-absolute label_overlay d-flex justify-content-center align-items-center"
-                  >
-                    <span>Upload</span>
-                  </span>
-                  <img
-                    src="./../../assets/images/mainSection/drink.webp"
-                    alt=""
-                  />
-                </label>
-                <label
-                  for="profile"
-                  class="mx-3 btn btn-outline-secondary p-0 px-1"
-                >
-                  upload file
-                </label>
-                <span>{{ errors.profileImage }}</span>
-                <Field
-                  type="file"
-                  class="d-none"
-                  name="profileImage"
-                  id="profile"
-                  @change="uploadFile"
-                  ref="file"
-                />
-              </div> -->
       <div class="row gx-0 g-2">
         <div class="col-6">
           <label for="firstname"
@@ -163,3 +131,36 @@ export default defineComponent({
   },
 });
 </script>
+
+<!-- profile upload   -->
+<!-- <div class="mb-3 profile d-flex align-items-center">
+                <label
+                  for="profile"
+                  class="profile_wrapper overflow-hidden rounded-circle position-relative"
+                >
+                  <span
+                    class="position-absolute label_overlay d-flex justify-content-center align-items-center"
+                  >
+                    <span>Upload</span>
+                  </span>
+                  <img
+                    src="./../../assets/images/mainSection/drink.webp"
+                    alt=""
+                  />
+                </label>
+                <label
+                  for="profile"
+                  class="mx-3 btn btn-outline-secondary p-0 px-1"
+                >
+                  upload file
+                </label>
+                <span>{{ errors.profileImage }}</span>
+                <Field
+                  type="file"
+                  class="d-none"
+                  name="profileImage"
+                  id="profile"
+                  @change="uploadFile"
+                  ref="file"
+                />
+              </div> -->

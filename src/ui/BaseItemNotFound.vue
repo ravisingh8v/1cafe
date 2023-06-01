@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="!product?.length"
+    v-if="!product?.length && searchedTerm?.length"
     class="p-5 align-items-center text-danger d-flex flex-column"
   >
     <div
@@ -15,7 +15,16 @@
   </div>
 </template>
 <script lang="ts">
+import { inject } from "vue";
 export default {
   props: ["product"],
+  setup() {
+    const searchedTerm = inject<string>("searchedTerm");
+    // const waitForResponse = ref(true);
+    // setTimeout(() => {
+    //   waitForResponse.value = false;
+    // }, 400);
+    return { searchedTerm: searchedTerm };
+  },
 };
 </script>

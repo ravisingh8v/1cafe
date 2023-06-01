@@ -28,18 +28,17 @@ const routes: Array<RouteRecordRaw> = [
 
 ]
 
+const scrollBehavior = (to: any, from: any, savedPosition: any) => {
+  return { left: 0, top: 0 }
+}
+
 const router = createRouter({
   history: createWebHistory(),
   routes,
   linkActiveClass: "active",
-  scrollBehavior(_1, _2, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { top: 0, left: 0 }
-    }
-  }
+  scrollBehavior
 })
+
 // guard 
 router.beforeEach((to, _, next) => {
   if (to.meta.requireAuth && !store.getters['auth/isAuthenticated']) {

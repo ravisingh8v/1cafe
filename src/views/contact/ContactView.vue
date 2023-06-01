@@ -199,9 +199,9 @@ export default defineComponent({
           day: day,
         })
         .then((res) => {
-          console.log(res);
-
-          res.data ? (submitted.value = true) : (catchError.value = res);
+          res.data
+            ? (submitted.value = true)
+            : (catchError.value = res.statusText);
         });
       // .catch((res) => {
       //   console.log("catch", res);

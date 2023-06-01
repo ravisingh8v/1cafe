@@ -14,6 +14,7 @@ export default ({
     showGuardAlert(state: any) {
         return state.showGuardAlert
     },
+
     token(state: any) {
         return state.token
     }

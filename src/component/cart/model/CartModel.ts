@@ -5,5 +5,5 @@ export interface Cart {
     quantity: number;
     totalPrice: number;
     description: string;
-    editId?: string;
+    // editId?: string;
 }
