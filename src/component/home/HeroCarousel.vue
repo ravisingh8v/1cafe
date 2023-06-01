@@ -5,6 +5,7 @@
   >
     <!-- transition the items  -->
     <Transition mode="out-in" name="carousel">
+      <!-- Static carousel Data -->
       <div
         class="p-sm-3 p-2 item_1 w-100 d-flex justify-content-center"
         v-if="firstSlide"
@@ -80,7 +81,6 @@ export default {
       } else {
         count.value = 1;
       }
-      // console.log(count.value);
     }
 
     return {

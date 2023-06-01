@@ -35,7 +35,6 @@
             v-if="!isRouteLogin"
             :manageProfileData="manageProfileData"
           ></UserRegistration>
-          <!-- :isLoading="isLoading" -->
           <UserLogin @submitForm="submitForm" v-else></UserLogin>
         </base-card>
       </div>

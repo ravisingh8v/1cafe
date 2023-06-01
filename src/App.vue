@@ -25,7 +25,7 @@
   </section>
 </template>
 <script lang="ts">
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 // Importing Layout component
@@ -120,7 +120,6 @@ export default {
     watch(isLoadings, () => {
       isLoading.value = isLoadings.value;
     });
-    // onMounted(() => {});
 
     store.dispatch("auth/isAuth");
     authService.getUserData();
@@ -131,10 +130,10 @@ export default {
       footer,
       isAuthenticated,
       menu,
-      menuFn,
-      openMenu,
       isLoading,
       isNotFound,
+      menuFn,
+      openMenu,
     };
   },
 };

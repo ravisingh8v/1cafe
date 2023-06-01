@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import HomeFeed from "@/component/home/HomeFeed/HomeFeed.vue";
 import HeroCarousel from "./../component/home/HeroCarousel.vue";
-import { defineComponent } from "vue";
 import HomeHero from "@/component/home/HomeHero.vue";
 export default defineComponent({
   components: { HeroCarousel, HomeFeed, HomeHero },

@@ -1,5 +1,4 @@
 <template>
-  <!-- v-if="scrolled" -->
   <header
     class="main_header theme-p bg-dark d-flex justify-content-between align-items-center text-white position-sticky top-0"
   >
@@ -25,7 +24,6 @@
       <!-- navigation  -->
       <nav class="navbar">
         <ul class="d-flex nav" @click="isChecked = false">
-          <!-- @click="closeNav" -->
           <li class="nav-item">
             <RouterLink class="nav-link" to="/">Home</RouterLink>
           </li>
@@ -62,12 +60,12 @@
           </div>
         </div>
 
+        <!-- Profile Menu  -->
         <div
           v-if="openMenu && isAuthenticated"
           class="profile_action_wrapper shadow border border-secondary position-absolute w-100 bg-dark"
         >
           <ul @click="isChecked = false">
-            <!-- @click="closeNav" -->
             <li
               class="cp p-2 d-flex align-items-center"
               @click="$router.push('/manage-profile'), (openMenu = false)"
@@ -81,9 +79,9 @@
             </li>
           </ul>
         </div>
+
         <!-- login and registration link  -->
         <div v-if="!isAuthenticated">
-          <!-- v-if="isLogin !== '/login'" -->
           <div @click="isChecked = false">
             <RouterLink
               class="btn btn-primary"
@@ -91,16 +89,10 @@
               >{{ isLogin !== "/login" ? "Login" : "Registration" }}</RouterLink
             >
           </div>
-          <!-- <div class="ms-2" v-else>
-            <RouterLink class="btn btn-primary" to="/registration">
-              Registration
-            </RouterLink>
-          </div> -->
         </div>
       </div>
       <!-- close icon  -->
       <label @click="closeNav" for="" class="close_mobile_navigation">
-        <!-- @click="closeNav" -->
         <span class="fs-1 primary_close_btn icon material-symbols-outlined">
           close
         </span>
@@ -113,7 +105,6 @@
       ref="hamburgerIcon"
       @click="openNav"
     >
-      <!-- @click="openNav" -->
       menu
     </label>
   </header>
@@ -121,13 +112,18 @@
 
 <!-- script -->
 <script lang="ts">
-import "./../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js";
+// Imports
 import { ref, computed, watch } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+
+// Export headers logics
 export default {
+  // Props
   props: ["isLogin", "isAuthenticated", "scrolled", "menu"],
+
   setup(props: any, context: any) {
+    // Variables
     const store = useStore();
     const router = useRouter();
 
@@ -164,7 +160,7 @@ export default {
       { immediate: true }
     );
 
-    // user.value = activeUser.value;
+    // Logout
     function logout() {
       store.dispatch("auth/logout");
       openMenu.value = false;
@@ -194,4 +190,6 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+// style
+</style>
