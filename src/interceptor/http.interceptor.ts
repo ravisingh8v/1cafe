@@ -27,7 +27,7 @@ Http.interceptors.response.use((response: any) => {
     const errorMessage = ref('');
     switch (response) {
         case 400:
-            errorMessage.value = 'invalid input'
+            errorMessage.value = 'Invalid input'
             break;
         case 401:
             errorMessage.value = 'Unauthorized access'

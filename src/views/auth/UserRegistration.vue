@@ -24,7 +24,7 @@
         </div>
         <div class="col-6">
           <label for="lastname"
-            >lastName<span class="text-danger">*</span></label
+            >lastname<span class="text-danger">*</span></label
           >
           <Field
             type="text"
@@ -104,8 +104,8 @@ export default defineComponent({
     } else {
       // for manage profile
       schema.value = yup.object({
-        firstName: yup.string().required("this field is required"),
-        lastName: yup.string().required("this field is required"),
+        firstName: yup.string().trim().required("this field is required"),
+        lastName: yup.string().min(6),
         email: yup.string(),
       });
     }

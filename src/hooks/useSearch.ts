@@ -5,7 +5,7 @@
  * @param searchTerm getting search input
  * @returns returning searched item
  */
-export default function useSearch(data?: any, searchTerm?: any) {
+export default function useSearch(data: any, searchTerm: any, searchField?: any) {
 
     const item = data?.value.filter(
         (res: any) =>

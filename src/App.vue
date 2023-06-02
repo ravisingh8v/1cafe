@@ -38,7 +38,6 @@ export default {
   setup() {
     const route = useRoute();
     const store = useStore();
-
     // getting current route to hide footer on login page
     const currentRoute = ref("");
     const isNotFound = ref();
