@@ -36,6 +36,7 @@
             :manageProfileData="manageProfileData"
           ></UserRegistration>
           <UserLogin @submitForm="submitForm" v-else></UserLogin>
+          <!-- @onRecaptchaVerified="onRecaptchaVerified" -->
         </base-card>
       </div>
     </div>
@@ -85,16 +86,18 @@ export default {
 
     // forms Data
     const catchError = ref();
+    // const clickListener = ref(0);
+    // getting token
 
     /**
      * sending to store
      * @param value from form
      */
     async function submitForm(value: FormContext["values"]) {
-      // click on login
-
       // on Login
       if (isRouteLogin.value) {
+        // console.log(captchaToken);
+
         authService
           .userLogin({
             email: value.email,
@@ -113,7 +116,7 @@ export default {
           });
       } else {
         // on registration sending this to firebase admin dashboard
-        if (value.password) {
+        if (value.password && value.firstName) {
           // if password is not there so its manage profile
 
           await authService
@@ -129,14 +132,14 @@ export default {
                 catchError.value = res.error?.message;
               }
             });
+          await authService.registration({
+            firstName: value.firstName,
+            lastName: value.lastName,
+            email: value.email,
+          });
+          authService.getUserData();
         }
-        await authService.registration({
-          firstName: value.firstName,
-          lastName: value.lastName,
-          email: value.email,
-        });
         // to getting updated user data when manage profile form is submitted
-        authService.getUserData();
       }
     }
 
