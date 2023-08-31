@@ -14,7 +14,10 @@
         </h2>
       </div>
       <div class="my-4 d-flex justify-content-center justify-content-sm-start">
-        <router-link class="btn btn-outline-secondary order-button" to="/order"
+        <router-link
+          class="btn btn-outline-secondary order-button"
+          id="order-button"
+          to="/order"
           >Order Now</router-link
         >
       </div>

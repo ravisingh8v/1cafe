@@ -105,7 +105,7 @@ export default defineComponent({
       // for manage profile
       schema.value = yup.object({
         firstName: yup.string().trim().required("this field is required"),
-        lastName: yup.string().min(6),
+        lastName: yup.string().required(),
         email: yup.string(),
       });
     }

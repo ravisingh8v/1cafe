@@ -12,11 +12,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 import HomeFeed from "@/component/home/HomeFeed/HomeFeed.vue";
 import HeroCarousel from "./../component/home/HeroCarousel.vue";
 import HomeHero from "@/component/home/HomeHero.vue";
+
 export default defineComponent({
   components: { HeroCarousel, HomeFeed, HomeHero },
+  setup() {
+    onMounted(() => {
+      // if (window.innerWidth > 768) {
+      //   useNavTour({ isMobile: false });
+      // }
+    });
+  },
 });
 </script>

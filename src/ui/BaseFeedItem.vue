@@ -11,7 +11,7 @@
         <p class="mb-3 fw-light">
           {{ feed.description }}
         </p>
-        <div>
+        <div id="view-button">
           <router-link to="/order" class="btn btn-outline-secondary">{{
             feed.head ? "See More" : "View Menu"
           }}</router-link>

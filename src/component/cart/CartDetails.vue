@@ -31,9 +31,10 @@
             No Item Found
           </div>
           <CartDetailsItem
-            v-for="cart in carts"
+            v-for="(cart, index) in carts"
             :key="cart.id.toString()"
             :cart="cart"
+            :index="index"
             @deleteItem="deleteItem"
             @editItem="$emit('editItem', $event)"
           ></CartDetailsItem>

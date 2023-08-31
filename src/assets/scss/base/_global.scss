@@ -35,3 +35,15 @@ body {
     overflow: auto;
   }
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  width: 5px;
+  padding: 2px;
+}
+::-webkit-scrollbar-thumb {
+  margin: 2px;
+  background-color: #212529;
+}

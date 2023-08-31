@@ -136,8 +136,8 @@ export default defineComponent({
     const catchError = ref("");
 
     const schema = yup.object({
-      firstName: yup.string().required(""),
-      lastName: yup.string().required(),
+      firstName: yup.string().required("firstname is a required field"),
+      lastName: yup.string().required("firstname is a required field"),
       email: yup.string().required(),
       message: yup.string().required(),
     });

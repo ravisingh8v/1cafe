@@ -18,33 +18,42 @@
     />
     <div
       class="mobile_navigation"
+      id="navigation_section"
       ref="mobileNavigation"
       @click="openMenu = false"
     >
       <!-- navigation  -->
-      <nav class="navbar">
-        <ul class="d-flex nav" @click="isChecked = false">
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/">Home</RouterLink>
+      <nav class="navbar w-md-100">
+        <!-- this condition to prevent :- popover don't close on desktop mode when clicking on any of the link  -->
+        <ul class="d-flex nav w-md-100" @click="closeNav">
+          <li class="nav-item" id="home-tab">
+            <RouterLink class="nav-link d-inline-block" to="/">Home</RouterLink>
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/order">Order</RouterLink>
+          <li class="nav-item" id="order-tab">
+            <RouterLink class="nav-link d-inline-block" to="/order"
+              >Order</RouterLink
+            >
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/contact">Contact</RouterLink>
+          <li class="nav-item" id="contact-tab">
+            <RouterLink class="nav-link d-inline-block" to="/contact"
+              >Contact</RouterLink
+            >
           </li>
-          <li class="nav-item">
-            <RouterLink class="nav-link" to="/about">About</RouterLink>
+          <li class="nav-item" id="about-tab">
+            <RouterLink class="nav-link d-inline-block" to="/about"
+              >About</RouterLink
+            >
           </li>
         </ul>
       </nav>
       <!-- profile  -->
       <div
-        class="profile_action d-flex align-items-center position-relative"
+        class="profile_action ms-2 d-flex align-items-center position-relative"
         :class="{ 'ms-3': !isAuthenticated }"
         @click.stop
       >
         <div
+          id="profile-tab"
           class="user_wrapper d-flex align-items-center"
           :class="{ 'min-w-100': isAuthenticated }"
         >
@@ -65,7 +74,7 @@
           v-if="openMenu && isAuthenticated"
           class="profile_action_wrapper shadow border border-secondary position-absolute w-100 bg-dark"
         >
-          <ul @click="isChecked = false">
+          <ul @click="closeNav">
             <li
               class="cp p-2 d-flex align-items-center"
               @click="$router.push('/manage-profile'), (openMenu = false)"
@@ -81,7 +90,7 @@
         </div>
 
         <!-- login and registration link  -->
-        <div v-if="!isAuthenticated">
+        <div v-if="!isAuthenticated" id="authentication-tab">
           <div @click="isChecked = false">
             <RouterLink
               class="btn btn-primary"
@@ -113,9 +122,10 @@
 <!-- script -->
 <script lang="ts">
 // Imports
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { useNavTour } from "../../hooks/useDriver";
 
 // Export headers logics
 export default {
@@ -168,14 +178,40 @@ export default {
       router.push("/login");
     }
 
-    // for mobile navigation
+    // for mobile navigation tour
+
     const isChecked = ref<boolean>(false);
+    // for closing mobile nav
     function closeNav() {
-      isChecked.value = false;
+      if (isChecked.value == true) {
+        isChecked.value = false;
+        console.log("this is working");
+        useNavTour({ isMobile: true }, isChecked.value);
+      }
     }
+
+    // for open mobile navigation
     function openNav() {
       isChecked.value = true;
+      useNavTour({ isMobile: true }, isChecked.value);
     }
+
+    // onLoad if device is not mobile phone then call the tour
+    onMounted(() => {
+      if (
+        window.innerWidth > 768 &&
+        (!localStorage.getItem("navigationTour") ||
+          localStorage.getItem("navigationTour") == "false")
+      ) {
+        useNavTour({ isMobile: false });
+      }
+    });
+    // watch(isChecked, () => {
+    //   if (isChecked.value == false) {
+    //     useNavTour("", isChecked.value);
+    //   }
+    // });
+
     return {
       store,
       openMenu,

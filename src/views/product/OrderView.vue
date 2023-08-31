@@ -18,7 +18,10 @@
       <!-- Breakfast and Bakery component  -->
       <section class="px-1 mt-3 mt-md-5">
         <!-- Search  -->
-        <div class="search_wrapper mb-3 ms-0 ms-md-3 d-md-none d-block">
+        <div
+          class="search_wrapper mb-3 ms-0 ms-md-3 d-md-none d-block"
+          id="big-screen-search"
+        >
           <BaseSearch
             :clearSearchValue="clearSearchValue"
             @searchedTerm="searchedTerm"
@@ -43,6 +46,7 @@
         class="product_details_wrapper position-fixed top-0 bottom-0 start-0 end-0 bg-dark bg-opacity-75 d-flex justify-content-center align-items-center"
       >
         <product-detail
+          ref="productDetailsPage"
           v-if="productDetail"
           :productDetail="productDetail"
           @closeModel="closeModel"
@@ -80,6 +84,7 @@ import BreadcrumbAndCart from "@/component/order/BreadcrumbAndCart.vue";
 import BaseSearch from "@/ui/BaseSearch.vue";
 import productService from "@/views/product/service/product.services";
 import useSearch from "@/hooks/useSearch";
+import "driver.js/dist/driver.css";
 export default defineComponent({
   components: {
     OrderHero,
@@ -91,6 +96,7 @@ export default defineComponent({
   },
   emits: ["searchedTerm", "allBreakfastProduct", "allBakeryProduct"],
   setup() {
+    // const isAuthenticated = localStorage.getItem("userId");
     const store = useStore();
     // for active component
     const currentComponent = shallowRef();
@@ -222,9 +228,62 @@ export default defineComponent({
     const getCartData = productService.getCartData().then((res: any) => {
       store.dispatch("products/getCartData", res);
     });
+    // const productDetailsPage = ref();
 
+    // onMounted(() => {
+    //   console.log(productDetailsPage.value);
+
+    //   const driverObj = driver({
+    //     showProgress: true,
+    //     steps: [
+    //       {
+    //         element: ".product_details_wrapper",
+    //         popover: {
+    //           title: "Animated Tour Example",
+    //           description:
+    //             "Here is the code example showing animated tour. Let's walk you through it.",
+    //           side: "left",
+    //           align: "start",
+    //         },
+    //       },
+    //       {
+    //         element: ".product_details_wrapper",
+    //         popover: {
+    //           title: "Animated Tour Example",
+    //           description:
+    //             "Here is the code example showing animated tour. Let's walk you through it.",
+    //           side: "left",
+    //           align: "start",
+    //         },
+    //       },
+    //       {
+    //         element: ".product_details_wrapper",
+    //         popover: {
+    //           title: "Animated Tour Example",
+    //           description:
+    //             "Here is the code example showing animated tour. Let's walk you through it.",
+    //           side: "left",
+    //           align: "start",
+    //         },
+    //       },
+    //     ],
+    //   });
+    //   driverObj.drive();
+    //   // driverObj.highlight({
+    //   //   element: ".product_details_wrapper",
+    //   //   popover: {
+    //   //     title: "Animated Tour Example",
+    //   //     description:
+    //   //       "Here is the code example showing animated tour. Let's walk you through it.",
+    //   //     side: "left",
+    //   //     align: "start",
+    //   //   },
+    //   // });
+    // });
     // return
     return {
+      // productDetailsPage,
+      // isAuthenticated,
       currentComponent,
       activeComponent,
       isBakery,

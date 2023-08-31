@@ -11,14 +11,18 @@
       <!-- title and actions  -->
       <div class="ms-2">
         <p class="m-0">{{ cart.title }}</p>
-        <div>
+        <div class="pt-2">
           <a
             class="text-primary p-0 ms-1 me-1"
             @click="$emit('editItem', cart)"
           >
             Edit
           </a>
-          <a class="text-danger p-0 ms-1" @click="$emit('deleteItem', cart.id)">
+          <a
+            :id="`deleteCartItem` + cart.id"
+            class="text-danger p-0 ms-1"
+            @click="deleteItem(`deleteCartItem` + cart.id)"
+          >
             Delete
           </a>
         </div>
@@ -32,7 +36,28 @@
   </div>
 </template>
 <script lang="ts">
+import { useContextualHighlight } from "../../hooks/useDriver";
 export default {
-  props: ["cart"],
+  props: ["cart", "index"],
+  setup(props: any, { emit }: any) {
+    // const emit = defineEmits<{
+    //   (event: string, values: string): void;
+    // }>();
+    function deleteItem(element: string) {
+      const contextualHighlight = localStorage.getItem("contextualHighlight");
+      if (!localStorage.getItem("contextualHighlight")) {
+        useContextualHighlight(
+          element,
+          "Alert",
+          "This action will remove the item you have selected from your cart."
+        );
+      }
+      if (contextualHighlight == "true") {
+        emit("deleteItem", props.cart.id);
+      }
+    }
+
+    return { deleteItem };
+  },
 };
 </script>

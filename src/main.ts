@@ -8,6 +8,7 @@ import BaseCard from "@/ui/BaseCard.vue";
 import BaseDialog from '@/ui/BaseDialog.vue'
 import BaseSpinner from '@/ui/baseSpinner.vue'
 
+
 const app = createApp(App)
 
 app.component('base-card', BaseCard)

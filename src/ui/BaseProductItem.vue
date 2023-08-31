@@ -16,7 +16,7 @@
               : product.description
           }}
         </p>
-        <span>${{ product.price }}</span>
+        <span class="fw-semibold">Price: ${{ product.price }}</span>
       </div>
     </div>
   </div>

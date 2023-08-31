@@ -3,7 +3,7 @@
     class="px-1 d-flex justify-content-between order_breadcrumb border-bottom text-secondary position-relative"
   >
     <div class="d-flex">
-      <div class="text-nowrap me-0 me-md-3">
+      <div class="text-nowrap me-0 me-md-3" id="breadcrumb-tab">
         <a
           to="/"
           class="pe-2 ps-1 d-inline-block h-100"
@@ -26,8 +26,9 @@
         >
       </div>
       <!-- search  -->
-      <div class="search_wrapper ms-0 ms-md-3 d-md-block d-none">
+      <div class="search_wrapper ms-0 ms-md-3 d-md-block d-none" ref="search">
         <BaseSearch
+          id="small-screen-search"
           :clearSearchValue="clearSearchValue"
           @searchedTerm="$emit('searchedTerm', $event)"
         ></BaseSearch>
@@ -52,9 +53,60 @@
 </template>
 <script lang="ts">
 import BaseSearch from "@/ui/BaseSearch.vue";
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
+import { useOrderPageFeatureTour } from "../../hooks/useDriver";
 export default {
   props: ["cartItems", "isBakery", "clearSearchValue"],
   components: { BaseSearch },
+  setup() {
+    // const search = ref();
+    onMounted(() => {
+      // setTimeout(() => {
+      // if (search.value === true) {
+      // const media = window.matchMedia("(min-width: 768px)");
+      // media.onchange = () => {
+      //   if (media.matches || window.innerWidth >= 768) {
+      //     desktopMode = true;
+      //   }
+      //   {
+      //     console.log("f");
+      //   }
+      // };
+      // const windowWidth = ref();
+      // const desktopMode = ref();
+      // windowWidth.value = window.innerWidth;
+      // console.log("initial", windowWidth.value);
+      // window.addEventListener("resize", () => {
+      //   windowWidth.value = window.innerWidth;
+      // });
+      // watch(
+      //   windowWidth,
+      //   () => {
+      //     if (windowWidth.value < 768) {
+      //       desktopMode.value = false;
+      //     } else {
+      //       desktopMode.value = true;
+      //     }
+      //   },
+      //   { immediate: true }
+      // );
+      // watch(
+      //   desktopMode,
+      //   () => {
+      //     const driveObj = useDriver(
+      //       "#breadcrumb-tab",
+      //       "Search Feature",
+      //       "We Introduce a New search feature now you can search for your favorite product",
+      //       windowWidth
+      //     );
+      //   },
+      //   { immediate: true }
+      // );
+      const driveObj = useOrderPageFeatureTour();
+    });
+    return {
+      // search,
+    };
+  },
 };
 </script>

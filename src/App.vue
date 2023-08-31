@@ -1,9 +1,10 @@
 <template>
-  <section class="d-flex flex-column h-100 app_wrapper">
+  <section class="d-flex flex-column h-100 app_wrapper overflow-auto">
     <base-spinner v-if="isLoading"></base-spinner>
     <!-- Header  -->
     <transition name="route">
       <the-header
+        class="header"
         :isLogin="isLogin"
         :isAuthenticated="isAuthenticated"
         :menu="menu"
@@ -25,7 +26,7 @@
   </section>
 </template>
 <script lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 // Importing Layout component
@@ -33,6 +34,7 @@ import TheHeader from "./component/layout/TheHeader.vue";
 import TheFooter from "./component/layout/TheFooter.vue";
 import authService from "./views/auth/service/auth.services";
 
+import "driver.js/dist/driver.css";
 export default {
   components: { TheHeader, TheFooter },
   setup() {
@@ -123,6 +125,67 @@ export default {
     store.dispatch("auth/isAuth");
     authService.getUserData();
     // store.dispatch("auth/getUserData");
+
+    // driverObj.drive();
+    onMounted(() => {
+      //#### first trying from here
+      // console.log(productDetailsPage.value);
+      // const driverObj = driver();
+      // {
+      //   showProgress: true,
+      //   steps: [
+      //     {
+      //       element: ".header",
+      //       popover: {
+      //         title: "Animated Tour Example",
+      //         description:
+      //           "Here is the code example showing animated tour. Let's walk you through it.",
+      //       },
+      //     },
+      //   ],
+      // }
+      // driverObj.drive();
+      // driverObj.setSteps([
+      //   {
+      //     element: ".header ",
+      //     popover: {
+      //       title: "Animated Tour Example",
+      //       description:
+      //         "Here is the code example showing animated tour. Let's walk you through it.",
+      //       side: "left",
+      //       align: "start",
+      //       onNextClick(element, steps, opts: any) {
+      //         console.log(opts);
+      //         if (isAuthenticated.value) {
+      //           driverObj.moveTo(opts.state.activeIndex + 1);
+      //         } else {
+      //           driverObj.moveTo(opts.state.activeIndex + 2);
+      //         }
+      //       },
+      //     },
+      //   },
+      //   {
+      //     element: ".footer_wrapper ",
+      //     popover: {
+      //       title: "Animated Tour Example",
+      //       description:
+      //         "Here is the code example showing animated tour. Let's walk you through it.",
+      //       side: "left",
+      //       align: "start",
+      //       onNextClick(element, steps, opts: any) {
+      //         console.log(opts);
+      //         if (isAuthenticated.value) {
+      //           router.push("/order");
+      //           driverObj.moveTo(opts.state.activeIndex + 1);
+      //         } else {
+      //           driverObj.moveTo(opts.state.activeIndex + 2);
+      //         }
+      //       },
+      //     },
+      //   },
+      // ]);
+      // driverObj.drive();
+    });
 
     return {
       isLogin,

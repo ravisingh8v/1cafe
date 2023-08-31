@@ -106,7 +106,8 @@ export default {
           .then((res: any) => {
             // comes from backend
             if (res && !res.error) {
-              router.push("/");
+              // router.push("/");
+              router.back();
               store.dispatch("auth/userLogin", res);
               authService.getUserData();
               // store.dispatch("auth/getUserData");
@@ -132,13 +133,13 @@ export default {
                 catchError.value = res.error?.message;
               }
             });
-          await authService.registration({
-            firstName: value.firstName,
-            lastName: value.lastName,
-            email: value.email,
-          });
-          authService.getUserData();
         }
+        await authService.registration({
+          firstName: value.firstName,
+          lastName: value.lastName,
+          email: value.email,
+        });
+        authService.getUserData();
         // to getting updated user data when manage profile form is submitted
       }
     }

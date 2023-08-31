@@ -1,5 +1,5 @@
 .main_header {
-  z-index: 10000;
+  z-index: 1000;
   .primary_close_btn {
     color: $light;
     transition: $primary-transition;
@@ -105,6 +105,11 @@
       top: 20px;
       right: 20px;
     }
+  }
+}
+@media (max-width: 768px) {
+  .w-md-100 {
+    width: 100%;
   }
 }
 // for toggle navbar
