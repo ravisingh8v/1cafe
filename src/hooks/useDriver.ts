@@ -78,6 +78,7 @@ export function useContextualHighlight(
  */
 export function useOrderPageFeatureTour() {
 
+    const driverObj = driver()
     if (!isGuideActive.navigation && !isGuideActive.contextual) {
 
         setTimeout(() => {
@@ -90,7 +91,7 @@ export function useOrderPageFeatureTour() {
 
             //navigationTour not found then only tour
             if (getOrderTour == "false") {
-                const driverObj = driver({
+                driverObj.setConfig({
                     showButtons: ["close", "next"],
                     doneBtnText: "Okay",
                     prevBtnText: "",
@@ -105,7 +106,12 @@ export function useOrderPageFeatureTour() {
                     onDeselected() {
                         isGuideActive.feature = false
                     },
-                    steps: [
+                })
+                const route = router.currentRoute.value.path
+
+                if (route == "/order") {
+                    isGuideActive.feature = true
+                    driverObj.highlight(
                         {
                             element: "#breadcrumb-tab",
                             popover: {
@@ -124,26 +130,18 @@ export function useOrderPageFeatureTour() {
                                     isGuideActive.feature = false
                                 },
 
-                            },
+                            }
                         },
-                    ],
-                });
-
-
-                isGuideActive.feature = true
-                const route = router.currentRoute.value.path
-
-                if (route == "/order") {
-                    driverObj.drive();
+                    )
                 }
 
                 // mediaWidth.value < 768 ? driverObj.destroy() : ''
                 // console.log(mediaWidth.value);
 
-                return driverObj;
             }
         }, 2000);
     }
+    return driverObj;
 }
 // element?: any, title?: any, description?: any, mediaWidth?: any
 // let windowWidth;

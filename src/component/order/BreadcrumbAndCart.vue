@@ -53,7 +53,7 @@
 </template>
 <script lang="ts">
 import BaseSearch from "@/ui/BaseSearch.vue";
-import { ref, watch, computed, onMounted } from "vue";
+import { onMounted, onUnmounted } from "vue";
 import { useOrderPageFeatureTour } from "../../hooks/useDriver";
 export default {
   props: ["cartItems", "isBakery", "clearSearchValue"],
@@ -103,6 +103,10 @@ export default {
       //   { immediate: true }
       // );
       const driveObj = useOrderPageFeatureTour();
+    });
+
+    onUnmounted(() => {
+      useOrderPageFeatureTour().destroy();
     });
     return {
       // search,
